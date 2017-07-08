@@ -1,1 +1,2 @@
-# num
+# Synopsis
+Num provides a class BigUtil, with static methods for more powerful usage of BigDecimal and BigInteger, and a class Rat, which is a rational number data type allowing perfect-precision rational arithmetic and high-precision approximations for irrational operations.
