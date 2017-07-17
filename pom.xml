@@ -67,7 +67,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<assertions-version>1.5.0</assertions-version>
+		<assertions-version>2.0.0</assertions-version>
 		<junit-version>4.12</junit-version>
 	</properties>
 
