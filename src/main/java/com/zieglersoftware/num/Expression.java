@@ -1,4 +1,4 @@
-package com.zieglersoftware.rational;
+package com.zieglersoftware.num;
 
 import static com.zieglersoftware.assertions.Assertions.between;
 import static com.zieglersoftware.assertions.Assertions.notNull;

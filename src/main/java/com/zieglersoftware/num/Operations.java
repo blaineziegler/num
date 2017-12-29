@@ -1,20 +1,10 @@
-package com.zieglersoftware.rational;
+package com.zieglersoftware.num;
 
 import static com.zieglersoftware.assertions.Assertions.fals;
 import static com.zieglersoftware.assertions.Assertions.notEqual;
 import static com.zieglersoftware.assertions.Assertions.tru;
-import static com.zieglersoftware.rational.BigUtil.BI1;
-import static com.zieglersoftware.rational.BigUtil.bi;
-import static com.zieglersoftware.rational.BigUtil.equal;
-import static com.zieglersoftware.rational.BigUtil.fraction;
-import static com.zieglersoftware.rational.BigUtil.isNeg;
-import static com.zieglersoftware.rational.BigUtil.isOne;
-import static com.zieglersoftware.rational.BigUtil.isPos;
-import static com.zieglersoftware.rational.BigUtil.isZero;
-import static com.zieglersoftware.rational.BigUtil.less;
-import static com.zieglersoftware.rational.BigUtil.nthRoot;
-import static com.zieglersoftware.rational.MathUtil.gcd;
-import static com.zieglersoftware.rational.MathUtil.primeFactors;
+import static com.zieglersoftware.num.BigUtil.*;
+import static com.zieglersoftware.num.MathUtil.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

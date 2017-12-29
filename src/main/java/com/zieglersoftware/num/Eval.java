@@ -1,4 +1,4 @@
-package com.zieglersoftware.rational;
+package com.zieglersoftware.num;
 
 import static com.zieglersoftware.assertions.Assertions.fals;
 import static com.zieglersoftware.assertions.Assertions.notEmpty;

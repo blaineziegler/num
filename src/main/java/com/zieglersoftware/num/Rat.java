@@ -1,13 +1,8 @@
-package com.zieglersoftware.rational;
+package com.zieglersoftware.num;
 
 import static com.zieglersoftware.assertions.Assertions.fals;
 import static com.zieglersoftware.assertions.Assertions.notNull;
-import static com.zieglersoftware.rational.BigUtil.BI0;
-import static com.zieglersoftware.rational.BigUtil.BI1;
-import static com.zieglersoftware.rational.BigUtil.BIM1;
-import static com.zieglersoftware.rational.BigUtil.bd;
-import static com.zieglersoftware.rational.BigUtil.bi;
-import static com.zieglersoftware.rational.BigUtil.fraction;
+import static com.zieglersoftware.num.BigUtil.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

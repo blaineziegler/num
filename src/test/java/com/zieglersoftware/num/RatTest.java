@@ -1,4 +1,4 @@
-package com.zieglersoftware.rational;
+package com.zieglersoftware.num;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.junit.Test;
+
+import com.zieglersoftware.num.Rat;
 
 public class RatTest
 {

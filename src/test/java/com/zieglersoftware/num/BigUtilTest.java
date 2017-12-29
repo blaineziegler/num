@@ -1,9 +1,6 @@
-package com.zieglersoftware.rational;
+package com.zieglersoftware.num;
 
-import static com.zieglersoftware.rational.BigUtil.BD1;
-import static com.zieglersoftware.rational.BigUtil.bd;
-import static com.zieglersoftware.rational.BigUtil.bi;
-import static com.zieglersoftware.rational.BigUtil.invert;
+import static com.zieglersoftware.num.BigUtil.*;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,7 +13,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.zieglersoftware.rational.BigUtil;
+import com.zieglersoftware.num.BigUtil;
 
 public class BigUtilTest
 {
