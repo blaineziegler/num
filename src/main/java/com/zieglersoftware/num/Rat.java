@@ -21,7 +21,7 @@ import com.zieglersoftware.assertions.Assertions;
  * precision, but if a numerator or denominator approaches the magnitude
  * {@code 2}<sup>{@code Integer.MAX_VALUE}</sup>, overflow may occur.
  */
-public final class Rat
+public final class Rat implements Comparable<Rat>
 {
 	private final BigInteger numerator;
 	private final BigInteger denominator;
@@ -278,6 +278,15 @@ public final class Rat
 			return BigUtil.lessOrEqual(this.numerator, other.numerator);
 		else
 			return BigUtil.lessOrEqual(this.numerator.multiply(other.denominator), other.numerator.multiply(this.denominator));
+	}
+
+	@Override
+	public int compareTo(Rat other)
+	{
+		if (BigUtil.equal(this.denominator, other.denominator))
+			return this.numerator.compareTo(other.numerator);
+		else
+			return this.numerator.multiply(other.denominator).compareTo(other.numerator.multiply(this.denominator));
 	}
 
 	public BigInteger numerator()

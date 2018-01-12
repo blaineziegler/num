@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
-
-import com.zieglersoftware.num.Rat;
 
 public class RatTest
 {
@@ -734,5 +734,29 @@ public class RatTest
 		assertEquals(false, h.greaterOrEqual(d));
 		assertEquals(false, e.greaterOrEqual(i));
 		assertEquals(true, i.greaterOrEqual(e));
+
+		assertEquals(-1, a.compareTo(b));
+		assertEquals(1, b.compareTo(a));
+		assertEquals(1, a.compareTo(c));
+		assertEquals(-1, c.compareTo(a));
+		assertEquals(-1, a.compareTo(d));
+		assertEquals(1, d.compareTo(a));
+		assertEquals(-1, a.compareTo(f));
+		assertEquals(1, f.compareTo(a));
+		assertEquals(1, b.compareTo(c));
+		assertEquals(-1, c.compareTo(b));
+		assertEquals(1, b.compareTo(d));
+		assertEquals(-1, d.compareTo(b));
+		assertEquals(0, d.compareTo(f));
+		assertEquals(0, f.compareTo(d));
+		assertEquals(1, d.compareTo(g));
+		assertEquals(-1, g.compareTo(d));
+		assertEquals(-1, e.compareTo(f));
+		assertEquals(1, f.compareTo(e));
+		assertEquals(0, e.compareTo(g));
+		assertEquals(0, g.compareTo(e));
+		List<Rat> sortedRats = Arrays.asList(a, b, c, d, e, f, g, h, i);
+		sortedRats.sort(null);
+		assertEquals(Arrays.asList(c, e, g, i, a, h, d, f, b), sortedRats);
 	}
 }
