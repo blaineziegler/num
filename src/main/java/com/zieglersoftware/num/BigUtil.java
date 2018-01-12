@@ -411,7 +411,7 @@ public final class BigUtil
 	 */
 	public static BigInteger round(BigDecimal val)
 	{
-		return val.setScale(0, RoundingMode.HALF_UP).toBigIntegerExact();
+		return round(val, RoundingMode.HALF_UP);
 	}
 
 	/**
