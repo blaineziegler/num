@@ -2,7 +2,12 @@ package com.zieglersoftware.num;
 
 import static com.zieglersoftware.assertions.Assertions.fals;
 import static com.zieglersoftware.assertions.Assertions.notNull;
-import static com.zieglersoftware.num.BigUtil.*;
+import static com.zieglersoftware.num.BigUtil.BI0;
+import static com.zieglersoftware.num.BigUtil.BI1;
+import static com.zieglersoftware.num.BigUtil.BIM1;
+import static com.zieglersoftware.num.BigUtil.bd;
+import static com.zieglersoftware.num.BigUtil.bi;
+import static com.zieglersoftware.num.BigUtil.fraction;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
