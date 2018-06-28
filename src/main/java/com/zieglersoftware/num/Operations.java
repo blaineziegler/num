@@ -1,18 +1,18 @@
 package com.zieglersoftware.num;
 
 import static com.zieglersoftware.assertions.Assertions.fals;
+import static com.zieglersoftware.assertions.Assertions.greater;
 import static com.zieglersoftware.assertions.Assertions.notEqual;
 import static com.zieglersoftware.assertions.Assertions.tru;
+import static com.zieglersoftware.num.BigUtil.BI0;
 import static com.zieglersoftware.num.BigUtil.BI1;
 import static com.zieglersoftware.num.BigUtil.bi;
 import static com.zieglersoftware.num.BigUtil.equal;
-import static com.zieglersoftware.num.BigUtil.fraction;
 import static com.zieglersoftware.num.BigUtil.isNeg;
 import static com.zieglersoftware.num.BigUtil.isOne;
 import static com.zieglersoftware.num.BigUtil.isPos;
 import static com.zieglersoftware.num.BigUtil.isZero;
 import static com.zieglersoftware.num.BigUtil.less;
-import static com.zieglersoftware.num.BigUtil.nthRoot;
 import static com.zieglersoftware.num.MathUtil.gcd;
 import static com.zieglersoftware.num.MathUtil.primeFactors;
 
@@ -96,8 +96,8 @@ final class Operations
 	/**
 	 * Returns a numerator and denominator of the result, not necessarily reduced.
 	 * <p>
-	 * {@code baseNumerator} and {@code exponentNumerator} cannot both be 0. If
-	 * {@code baseNumerator} is negative, {@code exponentDenominator} must be odd.
+	 * {@code baseNumerator} and {@code exponentNumerator} cannot both be 0.
+	 * If {@code baseNumerator} is negative, {@code exponentDenominator} must be odd.
 	 */
 	public static BigInteger[] pow(BigInteger baseNumerator, BigInteger baseDenominator, BigInteger exponentNumerator, BigInteger exponentDenominator)
 	{
@@ -121,14 +121,46 @@ final class Operations
 			else
 				return new BigInteger[] { numeratorToPower, denominatorToPower };
 		}
-		BigDecimal numeratorToPowerAndRoot = nthRoot(numeratorToPower, exponentDenominator);
-		BigInteger[] numeratorToPowerAndRootAsFraction = fraction(numeratorToPowerAndRoot);
-		BigDecimal denominatorToPowerAndRoot = nthRoot(denominatorToPower, exponentDenominator);
-		BigInteger[] denominatorToPowerAndRootAsFraction = fraction(denominatorToPowerAndRoot);
+		BigDecimal numeratorToPowerAndRoot = BigUtil.nthRoot(numeratorToPower, exponentDenominator);
+		BigInteger[] numeratorToPowerAndRootAsFraction = BigUtil.fraction(numeratorToPowerAndRoot);
+		BigDecimal denominatorToPowerAndRoot = BigUtil.nthRoot(denominatorToPower, exponentDenominator);
+		BigInteger[] denominatorToPowerAndRootAsFraction = BigUtil.fraction(denominatorToPowerAndRoot);
 		if (negativeExponent)
 			return new BigInteger[] { numeratorToPowerAndRootAsFraction[1].multiply(denominatorToPowerAndRootAsFraction[0]), numeratorToPowerAndRootAsFraction[0].multiply(denominatorToPowerAndRootAsFraction[1]) };
 		else
 			return new BigInteger[] { numeratorToPowerAndRootAsFraction[0].multiply(denominatorToPowerAndRootAsFraction[1]), numeratorToPowerAndRootAsFraction[1].multiply(denominatorToPowerAndRootAsFraction[0]) };
+	}
+
+	/**
+	 * Returns a numerator and denominator of the result, not necessarily reduced.
+	 * <p>
+	 * {@code nNumerator} must be greater than 0.
+	 * If {@code valNumerator} is negative, {@code nNumerator} must be odd.
+	 */
+	public static BigInteger[] nthRoot(BigInteger valNumerator, BigInteger valDenominator, BigInteger nNumerator, BigInteger nDenominator)
+	{
+		greater(nNumerator, BI0, "nNumerator");
+		return pow(valNumerator, valDenominator, nDenominator, nNumerator);
+	}
+
+	/**
+	 * Returns a numerator and denominator of the result, not necessarily reduced.
+	 * <p>
+	 * {@code numerator} cannot be negative.
+	 */
+	public static BigInteger[] sqrt(BigInteger numerator, BigInteger denominator)
+	{
+		return pow(numerator, denominator, BI1, bi(2));
+	}
+
+	/**
+	 * Returns a numerator and denominator of the result, not necessarily reduced.
+	 */
+	public static BigInteger[] exp(BigInteger numerator, BigInteger denominator)
+	{
+		BigDecimal val = BigUtil.divide(numerator, denominator);
+		BigDecimal exp = BigUtil.exp(val);
+		return BigUtil.fraction(exp);
 	}
 
 	/**
@@ -145,7 +177,7 @@ final class Operations
 			return ONE;
 		BigDecimal val = BigUtil.divide(numerator, denominator);
 		BigDecimal ln = BigUtil.ln(val);
-		return fraction(ln);
+		return BigUtil.fraction(ln);
 	}
 
 	private static final BigInteger MAX_INT_TO_FACTOR = bi(1000000000);
@@ -230,7 +262,7 @@ final class Operations
 		BigDecimal base = BigUtil.divide(baseNumerator, baseDenominator);
 		BigDecimal val = BigUtil.divide(valNumerator, valDenominator);
 		BigDecimal log = BigUtil.log(base, val);
-		return fraction(log);
+		return BigUtil.fraction(log);
 	}
 
 	/**

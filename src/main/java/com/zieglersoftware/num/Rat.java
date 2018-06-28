@@ -77,6 +77,16 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public static final Rat E = of("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
 
+	/**
+	 * Zero
+	 */
+	public static final Rat ZERO = of(0);
+
+	/**
+	 * One
+	 */
+	public static final Rat ONE = of(1);
+
 	private static Rat ofReduced(BigInteger reducedNumerator, BigInteger reducedDenominator)
 	{
 		if (!BigUtil.isNeg(reducedNumerator) && BigUtil.less(reducedNumerator, FRACTIONAL_CACHE_SIZE) && BigUtil.less(reducedDenominator, FRACTIONAL_CACHE_SIZE))
@@ -228,14 +238,29 @@ public final class Rat implements Comparable<Rat>
 		return of(Operations.pow(this.numerator, this.denominator, exponent.numerator, exponent.denominator));
 	}
 
-	public Rat ln()
+	public Rat nthRoot(Rat n)
 	{
-		return of(Operations.ln(this.numerator, this.denominator));
+		return of(Operations.nthRoot(this.numerator, this.denominator, n.numerator, n.denominator));
+	}
+
+	public Rat sqrt()
+	{
+		return of(Operations.sqrt(numerator, denominator));
+	}
+
+	public Rat exp()
+	{
+		return of(Operations.exp(numerator, denominator));
 	}
 
 	public Rat log(Rat base)
 	{
 		return of(Operations.log(base.numerator, base.denominator, this.numerator, this.denominator));
+	}
+
+	public Rat ln()
+	{
+		return of(Operations.ln(numerator, denominator));
 	}
 
 	public boolean equal(Rat other)

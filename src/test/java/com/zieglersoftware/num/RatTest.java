@@ -13,6 +13,8 @@ import org.junit.Test;
 
 public class RatTest
 {
+	private static final double DOUBLE_TOLERANCE = 0.0001;
+
 	@Test
 	public void constants()
 	{
@@ -416,6 +418,60 @@ public class RatTest
 	}
 
 	@Test
+	public void nthRoot()
+	{
+		nthRoot(0, 1);
+		nthRoot(0, 2);
+		nthRoot(0, 3);
+		nthRoot(1, 1);
+		nthRoot(1, 2);
+		nthRoot(1, 3);
+		nthRoot(27, 1);
+		nthRoot(27, 2);
+		nthRoot(27, 3);
+		assertEquals(Rat.of(-27), Rat.of(-27).nthRoot(Rat.of(1)));
+		assertEquals(Rat.of(-3), Rat.of(-27).nthRoot(Rat.of(3)));
+	}
+
+	private void nthRoot(int val, int n)
+	{
+		double expectedResult = Math.pow(val, 1.0 / n);
+		double actualResult = Rat.of(val).nthRoot(Rat.of(n)).toDouble();
+		assertEquals(expectedResult, actualResult, DOUBLE_TOLERANCE);
+	}
+
+	@Test
+	public void sqrt()
+	{
+		sqrt(0);
+		sqrt(1);
+		sqrt(4);
+		sqrt(10);
+	}
+
+	private void sqrt(int val)
+	{
+		double expectedResult = Math.sqrt(val);
+		double actualResult = Rat.of(val).sqrt().toDouble();
+		assertEquals(expectedResult, actualResult, DOUBLE_TOLERANCE);
+	}
+
+	@Test
+	public void exp()
+	{
+		exp(0);
+		exp(1);
+		exp(10);
+	}
+
+	private void exp(int val)
+	{
+		double expectedResult = Math.exp(val);
+		double actualResult = Rat.of(val).exp().toDouble();
+		assertEquals(expectedResult, actualResult, DOUBLE_TOLERANCE);
+	}
+
+	@Test
 	public void log()
 	{
 		log(789, 27846, 1, 1, 0);
@@ -546,6 +602,21 @@ public class RatTest
 		Rat expectedRat = Rat.of(expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : BigInteger.ONE);
 		Rat actualRat = Rat.of(valNumerator, valDenominator).log(Rat.of(baseNumerator, baseDenominator));
 		assertEquals(expectedRat, actualRat);
+	}
+
+	@Test
+	public void ln()
+	{
+		ln(1);
+		ln(2);
+		ln(2.71828182845904523536);
+	}
+
+	private void ln(double val)
+	{
+		double expectedResult = Math.log(val);
+		double actualResult = Rat.of(val).ln().toDouble();
+		assertEquals(expectedResult, actualResult, DOUBLE_TOLERANCE);
 	}
 
 	@Test
