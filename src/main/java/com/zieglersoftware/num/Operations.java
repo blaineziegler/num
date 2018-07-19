@@ -86,7 +86,7 @@ final class Operations
 	 */
 	public static BigInteger[] divide(BigInteger aNumerator, BigInteger aDenominator, BigInteger bNumerator, BigInteger bDenominator)
 	{
-		notEqual(bNumerator, 0, "bNumerator");
+		notEqual(bNumerator, BigInteger.ZERO, "bNumerator");
 		return new BigInteger[] {
 				aNumerator.multiply(bDenominator),
 				aDenominator.multiply(bNumerator)

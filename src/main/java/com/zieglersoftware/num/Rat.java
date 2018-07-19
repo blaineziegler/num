@@ -101,7 +101,7 @@ public final class Rat implements Comparable<Rat>
 	{
 		notNull(numerator, "numerator");
 		notNull(denominator, "denominator");
-		Assertions.notEqual(denominator, 0, "denominator");
+		Assertions.notEqual(denominator, BigInteger.ZERO, "denominator");
 		if (BigUtil.isNeg(denominator))
 		{
 			numerator = numerator.negate();
