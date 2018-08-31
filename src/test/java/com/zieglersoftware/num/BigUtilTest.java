@@ -1,6 +1,9 @@
 package com.zieglersoftware.num;
 
-import static com.zieglersoftware.num.BigUtil.*;
+import static com.zieglersoftware.num.BigUtil.BD1;
+import static com.zieglersoftware.num.BigUtil.bd;
+import static com.zieglersoftware.num.BigUtil.bi;
+import static com.zieglersoftware.num.BigUtil.invert;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,8 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
-
-import com.zieglersoftware.num.BigUtil;
 
 public class BigUtilTest
 {
@@ -114,11 +115,32 @@ public class BigUtilTest
 		roundAssert("-1.2", -1);
 		roundAssert("-1.5", -2);
 		roundAssert("-1.8", -2);
+		roundAssert("1.9803", 0, "2");
+		roundAssert("1.9803", 1, "2");
+		roundAssert("1.9803", 2, "1.98");
+		roundAssert("1.9803", 3, "1.98");
+		roundAssert("1.9805", 3, "1.981");
+		roundAssert("1.9803", 4, "1.9803");
+		roundAssert("1.9803", 5, "1.9803");
+		roundAssert("0.00", 0, "0");
+		roundAssert("0.00", 1, "0");
+		roundAssert("0.00", 2, "0");
+		roundAssert("0.00", 3, "0");
+		roundAssert("-1.0", 1, "-1");
+		roundAssert("-1.55", 0, "-2");
+		roundAssert("-1.55", 1, "-1.6");
+		roundAssert("-1.55", 2, "-1.55");
+		roundAssert("-1.55", 3, "-1.55");
 	}
 
 	private void roundAssert(String input, long expectedRounded)
 	{
 		assertEquals(bi(expectedRounded), BigUtil.round(bd(input)));
+	}
+
+	private void roundAssert(String input, int decimalPlaces, String expectedRounded)
+	{
+		assertEquals(bd(expectedRounded), BigUtil.round(bd(input), decimalPlaces));
 	}
 
 	@Test
@@ -261,6 +283,74 @@ public class BigUtilTest
 	private void digitCountAssert(long input, int expectedDigitCount)
 	{
 		assertEquals(expectedDigitCount, BigUtil.digitCount(bi(input)));
+	}
+
+	@Test
+	public void multiply()
+	{
+		multiplyAssert("0", "1", "0");
+		multiplyAssert("1", "2", "2");
+		multiplyAssert("-1", "2", "-2");
+		multiplyAssert("1", "-2", "-2");
+		multiplyAssert("1", "-2", "-2");
+		multiplyAssert("-1", "-2", "2");
+		multiplyAssert("60", "1", "60");
+		multiplyAssert("6E1", "1", "60");
+		multiplyAssert("60", "0.1", "6");
+		multiplyAssert("6E1", "0.1", "6");
+		multiplyAssert("60.0", "0.1", "6");
+	}
+
+	private void multiplyAssert(String a, String b, String expectedResult)
+	{
+		assertEquals(bd(expectedResult), BigUtil.multiply(bd(a), bd(b)));
+	}
+
+	@Test
+	public void divide()
+	{
+		divideAssert(2, 1, "2");
+		divideAssert(1, 2, "0.5");
+		divideAssert(-2, 1, "-2");
+		divideAssert(-1, 2, "-0.5");
+		divideAssert(2, -1, "-2");
+		divideAssert(1, -2, "-0.5");
+		divideAssert(-2, -1, "2");
+		divideAssert(-1, -2, "0.5");
+		divideAssert("1200", "2", "600");
+		divideAssert("1200.0", "2", "600");
+		divideAssert("1200", "2.0", "600");
+		divideAssert("1200.0", "2.0", "600");
+		String oneThird = "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333";
+		divideAssert(3, 1, "3");
+		divideAssert(1, 3, oneThird);
+		divideAssert(-3, 1, "-3");
+		divideAssert(-1, 3, '-' + oneThird);
+		divideAssert(3, -1, "-3");
+		divideAssert(1, -3, '-' + oneThird);
+		divideAssert(-3, -1, "3");
+		divideAssert(-1, -3, oneThird);
+		divideAssert(100, 3, "33.333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333");
+		divideAssert(1, 99, "0.01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101");
+		divideAssert(10, 99, "0.1010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101");
+		divideAssert(
+			"100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+			"1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+			"0.1");
+		divideAssert(
+			"72036132161033157404651802854995145321405681650722343644452412176617642028800857002468569835359447770574239068",
+			"719641679930401172873644384165785667546510306201022414030493628138038381906102467557128569783810667038703687",
+			"100.1");
+	}
+
+	private void divideAssert(int n, int d, String expectedResult)
+	{
+		assertEquals(bd(expectedResult), BigUtil.divide(bd(n), bd(d)));
+	}
+
+	private void divideAssert(String n, String d, String expectedResult)
+	{
+		assertEquals(bd(expectedResult), BigUtil.divide(bd(n), bd(d)));
 	}
 
 	@Test

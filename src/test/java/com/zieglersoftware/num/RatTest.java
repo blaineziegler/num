@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class RatTest
 {
-	private static final double DOUBLE_TOLERANCE = 0.0001;
+	private static final double DOUBLE_COMPARISON_TOLERANCE = 0.000000000000000000001;
 
 	@Test
 	public void constants()
@@ -437,23 +437,34 @@ public class RatTest
 	{
 		double expectedResult = Math.pow(val, 1.0 / n);
 		double actualResult = Rat.of(val).nthRoot(Rat.of(n)).toDouble();
-		assertEquals(expectedResult, actualResult, DOUBLE_TOLERANCE);
+		assertEquals(expectedResult, actualResult, DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
 	public void sqrt()
 	{
-		sqrt(0);
-		sqrt(1);
-		sqrt(4);
+		sqrt(0, 0);
+		sqrt(1, 1);
+		sqrt(4, 2);
+		sqrt(1234567890L * 1234567890L, 1234567890);
+		sqrt(BigDecimal.valueOf(1234.5678).multiply(BigDecimal.valueOf(1234.5678)), BigDecimal.valueOf(1234.5678));
 		sqrt(10);
+		sqrt(123456890123456890.12345678901234567890);
 	}
 
-	private void sqrt(int val)
+	private void sqrt(long n, long expectedSquareRoot)
 	{
-		double expectedResult = Math.sqrt(val);
-		double actualResult = Rat.of(val).sqrt().toDouble();
-		assertEquals(expectedResult, actualResult, DOUBLE_TOLERANCE);
+		assertEquals(Rat.of(expectedSquareRoot), Rat.of(n).sqrt());
+	}
+
+	private void sqrt(BigDecimal n, BigDecimal expectedSquareRoot)
+	{
+		assertEquals(Rat.of(expectedSquareRoot), Rat.of(n).sqrt());
+	}
+
+	private void sqrt(double n)
+	{
+		assertEquals(Math.sqrt(n), Rat.of(n).sqrt().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
@@ -468,7 +479,7 @@ public class RatTest
 	{
 		double expectedResult = Math.exp(val);
 		double actualResult = Rat.of(val).exp().toDouble();
-		assertEquals(expectedResult, actualResult, DOUBLE_TOLERANCE);
+		assertEquals(expectedResult, actualResult, DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
@@ -607,16 +618,15 @@ public class RatTest
 	@Test
 	public void ln()
 	{
-		ln(1);
+		assertEquals(Rat.of(0), Rat.of(1).ln());
+		assertEquals(Rat.of(1), Rat.E.ln());
 		ln(2);
-		ln(2.71828182845904523536);
+		ln(123456890123456890.12345678901234567890);
 	}
 
-	private void ln(double val)
+	private void ln(double n)
 	{
-		double expectedResult = Math.log(val);
-		double actualResult = Rat.of(val).ln().toDouble();
-		assertEquals(expectedResult, actualResult, DOUBLE_TOLERANCE);
+		assertEquals(Math.log(n), Rat.of(n).ln().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
@@ -829,5 +839,32 @@ public class RatTest
 		List<Rat> sortedRats = Arrays.asList(a, b, c, d, e, f, g, h, i);
 		sortedRats.sort(null);
 		assertEquals(Arrays.asList(c, e, g, i, a, h, d, f, b), sortedRats);
+	}
+
+	@Test
+	public void reducePrecision()
+	{
+		reducePrecision(0, 1, 1, 0, 1);
+		reducePrecision(1234, 2345, 3, 123, 235);
+		reducePrecision(1234, 2345, 4, 1234, 2345);
+		reducePrecision(1234, 2345, 5, 1234, 2345);
+		reducePrecision(123, 4567, 2, 12, 457);
+		reducePrecision(123, 4561, 2, 1, 38);
+		reducePrecision(123, 4567, 3, 123, 4567);
+		reducePrecision(123, 4567, 4, 123, 4567);
+		reducePrecision(-1234, 2345, 3, -123, 235);
+		reducePrecision(-1234, 2345, 4, -1234, 2345);
+		reducePrecision(-1234, 2345, 5, -1234, 2345);
+		reducePrecision(-123, 4567, 2, -12, 457);
+		reducePrecision(-123, 4561, 2, -1, 38);
+		reducePrecision(-123, 4567, 3, -123, 4567);
+		reducePrecision(-123, 4567, 4, -123, 4567);
+	}
+
+	private void reducePrecision(long numerator, long denominator, int maxDigits, long expectedNumerator, long expectedDenominator)
+	{
+		Rat result = Rat.of(numerator, denominator).reducePrecision(maxDigits);
+		assertEquals(expectedNumerator, result.numerator().longValue());
+		assertEquals(expectedDenominator, result.denominator().longValue());
 	}
 }

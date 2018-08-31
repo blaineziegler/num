@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -415,12 +416,63 @@ public final class BigUtil
 	}
 
 	/**
-	 * Returns {@code val} rounded to a {@code BigInteger} according to
-	 * the given {@link RoundingMode}.
+	 * Returns {@code val} rounded to a {@code BigInteger},
+	 * using the given {@link RoundingMode}.
+	 * 
+	 * @see {@link #round(BigDecimal)}
+	 *      for examples using {@link RoundingMode#HALF_UP}
 	 */
 	public static BigInteger round(BigDecimal val, RoundingMode roundingMode)
 	{
 		return val.setScale(0, roundingMode).toBigIntegerExact();
+	}
+
+	/**
+	 * Returns {@code val} rounded to the given number of decimal places.
+	 * Uses {@link RoundingMode#HALF_UP}. {@code decimalPlaces} must be
+	 * at least zero. If it is zero, the result will be a whole number.
+	 * <p>
+	 * The result will not have any trailing zeros in the decimal part.
+	 * <p>
+	 * Examples:
+	 * 
+	 * <pre>
+	 *  1.9803 , 0 ->  2
+	 *  1.9803 , 1 ->  2
+	 *  1.9803 , 2 ->  1.98
+	 *  1.9803 , 3 ->  1.98
+	 *  1.9805 , 3 ->  1.981
+	 *  1.9803 , 4 ->  1.9803
+	 *  1.9803 , 5 ->  1.9803
+	 *  0.00   , 0 ->  0
+	 *  0.00   , 1 ->  0
+	 *  0.00   , 2 ->  0
+	 *  0.00   , 3 ->  0
+	 * -1.0    , 1 -> -1
+	 * -1.55   , 0 -> -2
+	 * -1.55   , 1 -> -1.6
+	 * -1.55   , 2 -> -1.55
+	 * -1.55   , 3 -> -1.55
+	 * </pre>
+	 */
+	public static BigDecimal round(BigDecimal val, int decimalPlaces)
+	{
+		return round(val, decimalPlaces, RoundingMode.HALF_UP);
+	}
+
+	/**
+	 * Returns {@code val} rounded to the given number of decimal places,
+	 * using the given {@link RoundingMode}. {@code decimalPlaces} must be
+	 * at least zero. If it is zero, the result will be a whole number.
+	 * <p>
+	 * The result will not have any trailing zeros in the decimal part.
+	 * 
+	 * @see {@link #round(BigDecimal, int))}
+	 *      for examples using {@link RoundingMode#HALF_UP}
+	 */
+	public static BigDecimal round(BigDecimal val, int decimalPlaces, RoundingMode roundingMode)
+	{
+		return val.setScale(decimalPlaces, roundingMode).stripTrailingZeros();
 	}
 
 	/**
@@ -435,10 +487,10 @@ public final class BigUtil
 	 *  3    ->   3
 	 *  0.5  ->   0
 	 *  0    ->   0
+	 * -0.5  ->   0
 	 * -3.80 ->  -3
 	 * -3.0  ->  -3
 	 * -3    ->  -3
-	 * -0.5  ->   0
 	 * </pre>
 	 */
 	public static BigInteger wholePart(BigDecimal val)
@@ -459,10 +511,10 @@ public final class BigUtil
 	 *  3    ->  0
 	 *  0.5  ->  0.5
 	 *  0    ->  0
+	 * -0.5  -> -0.5
 	 * -3.80 -> -0.8
 	 * -3.0  ->  0
 	 * -3    ->  0
-	 * -0.5  -> -0.5
 	 * </pre>
 	 */
 	public static BigDecimal decimalPart(BigDecimal val)
@@ -734,23 +786,18 @@ public final class BigUtil
 		BigDecimal result = a.multiply(b, MC110);
 		for (BigDecimal other : others)
 			result = result.multiply(other, MC110);
-		return result;
+		return stripDecimalZeros(result);
 	}
 
 	public static BigDecimal multiply(BigDecimal a, BigInteger b, BigInteger... others)
 	{
-		BigDecimal result = a.multiply(bd(b), MC110);
-		for (BigInteger other : others)
-			result = result.multiply(bd(other), MC110);
-		return result;
+		BigDecimal[] bdOthers = Arrays.stream(others).map(bi -> bd(bi)).toArray(BigDecimal[]::new);
+		return multiply(a, bd(b), bdOthers);
 	}
 
 	public static BigDecimal multiply(BigInteger a, BigDecimal b, BigDecimal... others)
 	{
-		BigDecimal result = bd(a).multiply(b, MC110);
-		for (BigDecimal other : others)
-			result = result.multiply(other, MC110);
-		return result;
+		return multiply(bd(a), b, others);
 	}
 
 	public static BigInteger multiply(BigInteger a, BigInteger b, BigInteger... others)
@@ -763,17 +810,17 @@ public final class BigUtil
 
 	public static BigDecimal divide(BigDecimal a, BigDecimal b)
 	{
-		return a.divide(b, MC110);
+		return stripDecimalZeros(a.divide(b, MC110));
 	}
 
 	public static BigDecimal divide(BigDecimal a, BigInteger b)
 	{
-		return a.divide(bd(b), MC110);
+		return divide(a, bd(b));
 	}
 
 	public static BigDecimal divide(BigInteger a, BigDecimal b)
 	{
-		return b.divide(bd(a), MC110);
+		return divide(bd(a), b);
 	}
 
 	/**
@@ -781,7 +828,7 @@ public final class BigUtil
 	 */
 	public static BigDecimal divide(BigInteger a, BigInteger b)
 	{
-		return bd(a).divide(bd(b), MC110);
+		return divide(bd(a), bd(b));
 	}
 
 	public static BigDecimal invert(BigDecimal val)
@@ -974,6 +1021,7 @@ public final class BigUtil
 	/**
 	 * Expects that {@code n} is greater than 0. Does no cache lookups or preconditions checks.
 	 */
+	// Calculates as a power, base^(1/n)
 	private static final BigDecimal calcNthRoot(BigDecimal base, BigInteger n)
 	{
 		if (isNeg(base))
@@ -1048,6 +1096,7 @@ public final class BigUtil
 	/**
 	 * Returns the square root of the given value. {@code val} must be non-negative.
 	 */
+	// Calculates as an nth root with n=2
 	public static BigDecimal sqrt(BigDecimal val)
 	{
 		return nthRoot(val, 2);
@@ -1056,6 +1105,7 @@ public final class BigUtil
 	/**
 	 * Returns the square root of the given value. {@code val} must be non-negative.
 	 */
+	// Calculates as an nth root with n=2
 	public static BigDecimal sqrt(BigInteger val)
 	{
 		return nthRoot(val, 2);
@@ -1068,9 +1118,7 @@ public final class BigUtil
 	 */
 	public static BigDecimal exp(long power)
 	{
-		BigDecimal result = expInternal(power);
-		BigDecimal finalized = finalize(result);
-		return finalized;
+		return exp(bd(power));
 	}
 
 	/**
@@ -1080,9 +1128,7 @@ public final class BigUtil
 	 */
 	public static BigDecimal exp(BigInteger power)
 	{
-		BigDecimal result = expInternal(power);
-		BigDecimal finalized = finalize(result);
-		return finalized;
+		return exp(bd(power));
 	}
 
 	/**
@@ -1102,9 +1148,7 @@ public final class BigUtil
 	 */
 	public static BigDecimal ln(long val)
 	{
-		BigDecimal result = lnInternal(val);
-		BigDecimal finalized = finalize(result);
-		return finalized;
+		return ln(bd(val));
 	}
 
 	/**
@@ -1113,9 +1157,7 @@ public final class BigUtil
 	 */
 	public static BigDecimal ln(BigInteger val)
 	{
-		BigDecimal result = lnInternal(val);
-		BigDecimal finalized = finalize(result);
-		return finalized;
+		return ln(bd(val));
 	}
 
 	/**
@@ -1258,6 +1300,9 @@ public final class BigUtil
 	 * limit and the other value is somewhat larger than its limit, the calculation
 	 * might succeed.
 	 */
+	// Uses BigDecimal.pow(int), but allows somewhat larger powers by breaking up the calculation.
+	// Define integers a = power / MAX_SAFE_POWER and b = power % MAX_SAFE_POWER, so that
+	// power = a * MAX_SAFE_POWER + b, and base^power = (base^a)^MAX_SAFE_POWER * base^b
 	private static BigDecimal powInternal(BigDecimal base, long power)
 	{
 		if (base.compareTo(BigDecimal.ZERO) == 0 && power == 0)
@@ -1272,9 +1317,8 @@ public final class BigUtil
 			throw new IllegalArgumentException("Power " + power + " too large");
 		int a = (int) (power / MAX_SAFE_POWER);
 		int b = (int) (power % MAX_SAFE_POWER);
-		// power is a*SAFE_POWER + b, so base^power is (base^SAFE_POWER)^a * base^b
 		BigDecimal result = multiply(
-			base.pow(MAX_SAFE_POWER, MC110).pow(a, MC110),
+			base.pow(a, MC110).pow(MAX_SAFE_POWER, MC110),
 			base.pow(b, MC110));
 		return result;
 	}
@@ -1305,6 +1349,7 @@ public final class BigUtil
 	 * limit and the other value is somewhat larger than its limit, the calculation
 	 * might succeed.
 	 */
+	// Calculates base^power as (e^(ln base))^power = e^(ln base * power)
 	private static BigDecimal powInternal(BigDecimal base, BigDecimal power)
 	{
 		if (isInt(power))
@@ -1323,9 +1368,7 @@ public final class BigUtil
 			negativeBase = true;
 			base = base.negate();
 		}
-		BigDecimal lnBase = lnInternal(base);
-		BigDecimal powerTimesLnBase = multiply(power, lnBase);
-		BigDecimal result = expInternal(powerTimesLnBase);
+		BigDecimal result = expInternal(multiply(lnInternal(base), power));
 		BigDecimal negatedResult = negativeBase ? result.negate() : result;
 		return negatedResult;
 	}
@@ -1397,26 +1440,11 @@ public final class BigUtil
 	 * <p>
 	 * {@code abs(power)} must be less or equal to 4,900,000,000.
 	 */
-	private static BigDecimal expInternal(long power)
-	{
-		return powInternal(E110, power);
-	}
-
-	/**
-	 * Returns {@code e^power}
-	 * <p>
-	 * {@code abs(power)} must be less or equal to 4,900,000,000.
-	 */
-	private static BigDecimal expInternal(BigInteger power)
-	{
-		return powInternal(E110, power.longValueExact());
-	}
-
-	/**
-	 * Returns {@code e^power}
-	 * <p>
-	 * {@code abs(power)} must be less or equal to 4,900,000,000.
-	 */
+	// Uses the Taylor series f(power) = e^power = sum(i=0->inf, power^i / i!),
+	// taken two terms at a time. The series is centered at power=0, so low-degree
+	// approximations of the series are more accurate when power is close to 0.
+	// Recast the given power as a number closer to zero with the observation that 
+	// e ^ a.b = e^a * e^0.b = e^a * (e^(0.b/d))^d
 	private static BigDecimal expInternal(BigDecimal power)
 	{
 		if (isInt(power))
@@ -1456,23 +1484,6 @@ public final class BigUtil
 		return invertedResult;
 	}
 
-	/**
-	 * {@code val} must be greater than 0.
-	 */
-	private static BigDecimal lnInternal(long val)
-	{
-		return lnInternal(bd(val));
-	}
-
-	/**
-	 * {@code val} must be greater than 0. More specifically, {@code val}
-	 * must be greater than 10^-10,000,000 and less than 10^10,000,000.
-	 */
-	private static BigDecimal lnInternal(BigInteger val)
-	{
-		return lnInternal(bd(val));
-	}
-
 	private static List<BigDecimal> getLnCache()
 	{
 		int maxCachedLnInt = MAX_CACHED_LN.intValue();
@@ -1505,6 +1516,10 @@ public final class BigUtil
 	 * is less than 1 if {@code val} is less than 1. Does no cache lookups or
 	 * preconditions checks.
 	 */
+	// Uses Newton's method.
+	// If ln(val) = x, then val = e^x.
+	// So let f(x) = e^x - val, and d(f(x))/dx = e^x.
+	// Then x1 = x0 - (e^x0 - val) / e^x0
 	private static BigDecimal calcLnInternal(BigDecimal val, int compareToOne)
 	{
 		BigDecimal valInverted = val;
@@ -1651,6 +1666,7 @@ public final class BigUtil
 	 * {@code base} must be greater than 0 and not equal to 1.
 	 * {@code val} must be greater than 0.
 	 */
+	// Calculates log base of val as ln(val) / ln(base)
 	private static BigDecimal logInternal(BigDecimal base, BigDecimal val)
 	{
 		if (!isPos(base))
@@ -1663,10 +1679,19 @@ public final class BigUtil
 			return BD0;
 		if (equal(base, val))
 			return BD1;
-		BigDecimal lnVal = lnInternal(val);
-		BigDecimal lnBase = lnInternal(base);
-		BigDecimal result = divide(lnVal, lnBase);
+		BigDecimal result = divide(lnInternal(val), lnInternal(base));
 		return result;
+	}
+
+	/**
+	 * Strips trailing decimal zeros, not trailing integer zeros
+	 */
+	private static BigDecimal stripDecimalZeros(BigDecimal val)
+	{
+		val = val.stripTrailingZeros();
+		if (val.scale() < 0)
+			val = val.setScale(0);
+		return val;
 	}
 
 	/**
@@ -1678,8 +1703,10 @@ public final class BigUtil
 	 */
 	private static BigDecimal finalize(BigDecimal val)
 	{
-		if (val.scale() <= 0)
+		if (val.scale() == 0)
 			return val;
+		if (val.scale() < 0)
+			return val.setScale(0);
 		val = val.round(MC100);
 		BigDecimal roundedToInt = val.setScale(0, RoundingMode.HALF_UP);
 		if (val.compareTo(roundedToInt) == 0)

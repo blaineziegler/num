@@ -7,10 +7,14 @@ import static com.zieglersoftware.num.BigUtil.BI1;
 import static com.zieglersoftware.num.BigUtil.BIM1;
 import static com.zieglersoftware.num.BigUtil.bd;
 import static com.zieglersoftware.num.BigUtil.bi;
+import static com.zieglersoftware.num.BigUtil.digitCount;
+import static com.zieglersoftware.num.BigUtil.divide;
 import static com.zieglersoftware.num.BigUtil.fraction;
+import static com.zieglersoftware.num.BigUtil.round;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 
 import com.zieglersoftware.assertions.Assertions;
 
@@ -165,7 +169,7 @@ public final class Rat implements Comparable<Rat>
 	}
 
 	/**
-	 * Evaluates the given expression and returns the result as a {@code Rat}.
+	 * Evaluates the given expression and returns the result as a Rat.
 	 * The expression must be a valid arithmetic expression, and may contain
 	 * whitespace, digits, decimal points, parenthesis, and the operators
 	 * {@code + - * / ^}.
@@ -322,6 +326,39 @@ public final class Rat implements Comparable<Rat>
 	public BigInteger denominator()
 	{
 		return denominator;
+	}
+
+	/**
+	 * If both the numerator and denominator of this Rat have more digits than the given maximum,
+	 * returns a different Rat where both the numerator and denominator have been divided by a power of 10
+	 * such that the <i>shorter</i> of the two has the requested number of digits. If rounding is necessary, {@link RoundingMode#HALF_UP}
+	 * is used.
+	 * <p>
+	 * Note that the resulting fraction will be reduced if possible, so may contain different leading digits than this Rat.
+	 * <p>
+	 * If either the numerator or denominator of this Rat does not exceed the requested number of digits, a Rat of the same value is returned.
+	 * <p>
+	 * Examples:
+	 * 
+	 * <pre>
+	 * 1234/2345, 3 ->  123/235 
+	 * 1234/2345, 4 -> 1234/2345 
+	 * 1234/2345, 5 -> 1234/2345
+	 *  123/4567, 2 ->   12/457
+	 *  123/4561, 2 ->    1/38 (12/456 reduced)
+	 *  123/4567, 3 ->  123/4567
+	 *  123/4567, 4 ->  123/4567
+	 * </pre>
+	 */
+	public Rat reducePrecision(int maxDigits)
+	{
+		int leastDigits = Math.min(digitCount(numerator), digitCount(denominator));
+		if (leastDigits <= maxDigits)
+			return this;
+		BigInteger divisor = bi(10).pow(leastDigits - maxDigits);
+		BigInteger newNumerator = round(divide(numerator, divisor));
+		BigInteger newDenominator = round(divide(denominator, divisor));
+		return of(newNumerator, newDenominator);
 	}
 
 	public BigDecimal toBigDecimal()
