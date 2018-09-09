@@ -115,6 +115,9 @@ public class BigUtilTest
 		roundAssert("-1.2", -1);
 		roundAssert("-1.5", -2);
 		roundAssert("-1.8", -2);
+		roundAssert("12", 12);
+		roundAssert("1230", 1230);
+		roundAssert("123000", 123000);
 		roundAssert("1.9803", 0, "2");
 		roundAssert("1.9803", 1, "2");
 		roundAssert("1.9803", 2, "1.98");
@@ -126,11 +129,42 @@ public class BigUtilTest
 		roundAssert("0.00", 1, "0");
 		roundAssert("0.00", 2, "0");
 		roundAssert("0.00", 3, "0");
+		roundAssert("0.00", 4, "0");
 		roundAssert("-1.0", 1, "-1");
 		roundAssert("-1.55", 0, "-2");
 		roundAssert("-1.55", 1, "-1.6");
 		roundAssert("-1.55", 2, "-1.55");
 		roundAssert("-1.55", 3, "-1.55");
+		roundAssert("12", 0, "12");
+		roundAssert("12", 1, "12");
+		roundAssert("10", 0, "10");
+		roundAssert("10", 1, "10");
+		roundAssert("123000", 0, "123000");
+		roundAssert("123000", 1, "123000");
+		roundAssert("12.0", 0, "12");
+		roundAssert("12.0", 1, "12");
+		roundAssert("10.0", 0, "10");
+		roundAssert("10.0", 1, "10");
+		roundAssert("10.01", 0, "10");
+		roundAssert("10.01", 1, "10");
+		roundAssert("10.01", 2, "10.01");
+		roundAssert("123000.0", 0, "123000");
+		roundAssert("123000.0", 1, "123000");
+		roundAssert("-12", 0, "-12");
+		roundAssert("-12", 1, "-12");
+		roundAssert("-10", 0, "-10");
+		roundAssert("-10", 1, "-10");
+		roundAssert("-123000", 0, "-123000");
+		roundAssert("-123000", 1, "-123000");
+		roundAssert("-12.0", 0, "-12");
+		roundAssert("-12.0", 1, "-12");
+		roundAssert("-10.0", 0, "-10");
+		roundAssert("-10.0", 1, "-10");
+		roundAssert("-10.01", 0, "-10");
+		roundAssert("-10.01", 1, "-10");
+		roundAssert("-10.01", 2, "-10.01");
+		roundAssert("-123000.0", 0, "-123000");
+		roundAssert("-123000.0", 1, "-123000");
 	}
 
 	private void roundAssert(String input, long expectedRounded)

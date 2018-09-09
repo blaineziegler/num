@@ -11,16 +11,83 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Any calculation returning a {@code BigDecimal} will be accurate to at least 100 significant figures.
- * Any calculation returning a {@code BigInteger} will be an exact result.
+ * Provides many static methods for more conveniently working with {@link BigDecimal} and {@link BigInteger}.
+ * Also provides some functionality that is not available at all with these classes; for example, raising a
+ * {@code BigDecimal} to the power of another {@code BigDecimal}.
+ * <p>
+ * Acquiring instances of {@code BigDecimal} and {@code BigInteger} is particularly easy with {@code BigUtil}.
+ * Simply call {@code bd(arg)} with any reasonable argument type to get a {@code BigDecimal}, and similarly
+ * {@code bi(arg)} to get a {@code BigInteger}. No need to think about whether to use a constructor or
+ * {@code valueOf()}, no risk of accidentally building a {@code BigDecimal} from a double the wrong way, and
+ * because then names {@code bd} and {@code bi} are fairly specific, unlike {@code valueOf}, it is practial
+ * to statically import them and get instances extremely succintly. Additionally, if you wish, you can use
+ * the static fields {@code BD0}, {@code BD1}, {@code BDM1}, {@code BI0}, {@code BI1}, and {@code BIM1} to
+ * acquire instances representing 0, 1, or negative 1, and these can also be conveniently statically imported.
+ * <p>
+ * Comparison methods are provided for comparing two {@code BigDecimals}, two {@code BigIntegers}, or one of each.
+ * {@code equal}, {@code notEqual}, {@code greater}, {@code less}, {@code greaterOrEqual}, and {@code lessOrEqual}
+ * are all provided, so you can avoid the clutter of the {@code (compareTo() <op> 0)} idiom. Additionally,
+ * {@code equal(BigDecimal, BigDecimal)} works as you would hope it would work -- two numbers that differ only in
+ * trailing zeros after the decimal point are equal to one another. Convenience methods are provided for other
+ * comparisons as well, namely {@code isPos}, {@code isNeg}, {@code isZero}, and {@code isOne}.
+ * <p>
+ * {@code isInt(BigDecimal)} can be used to determine whether the value has a nonzero decimal component.
+ * {@code wholePart(BigDecimal)} and {@code decimalPart(BigDecimal)} return the value's desired component, and
+ * {@code wholeAndDecimalParts(BigDecimal)} is similar but represents the decimal part as an integer.
+ * {@code fraction(BigDecimal)} and {@code mixedNumber(BigDecimal)} return a fractional view of the value.
+ * {@code digits(BigInteger)} returns an array of the value's digits, and {@code digits(BigDecimal)} returns two
+ * arrays, one for the whole part and one for the decimal part. {@code digitCount(BigInteger)} returns the length
+ * of the value.
+ * <p>
+ * {@code round(BigDecimal)} methods are provided, one for rounding to a {@code BigInteger} value and another for
+ * rounding to a different {@code BigDecimal} value. Unlike {@link BigDecimal#round(MathContext)}, {@code BigUtil}'s
+ * {@code round} method rounds to the given number of decimal places as you would expect, rather than reducing the
+ * total number of significant figures to the given amount. It also removes any trailing decimal zeros and does not
+ * cause the string representation to change to exponential notation.
+ * <p>
+ * {@code add}, {@code subtract}, {@code multiply}, and {@code divide} methods are provided, taking {@code BigDecimal},
+ * {@code BigInteger}, or a combination of the two as arguments. {@code add} and {@code multiply} can take a variable
+ * number of arguments so that a chain of additions and multiplications can be performed with one call. {@code divide}
+ * does not require the code clutter of specifying a number of digits to round to; if rounding is required, a very
+ * high precision result will be returned. If rounding is not required, the result will not include trailing decimal
+ * zeros.
+ * <p>
+ * {@code pow} can raise any {@code BigInteger} or {@code BigDecimal} to the power of any other {@code BigInteger},
+ * {@code BigDecimal}, or {@code long}. {@code sqrt} and {@code nthRoot} are also provided, as are {@code exp},
+ * {@code ln}, and {@code log}, all of which can take {@code BigDecimal} or {@code BigInteger} arguments.
+ * <p>
+ * Any calculation whose result requires rounding; i.e., an irrational number or a repeating decimal, will be returned
+ * with an extremely high precision (at least 100 significant figures).
  */
 public final class BigUtil
 {
+	/**
+	 * The {@code BigDecimal} 0, with no decimal digits
+	 */
 	public static final BigDecimal BD0 = bd(0);
+
+	/**
+	 * The {@code BigDecimal} 1, with no decimal digits
+	 */
 	public static final BigDecimal BD1 = bd(1);
+
+	/**
+	 * The {@code BigDecimal} -1, with no decimal digits
+	 */
 	public static final BigDecimal BDM1 = bd(-1);
+
+	/**
+	 * The {@code BigInteger} 0
+	 */
 	public static final BigInteger BI0 = bi(0);
+
+	/**
+	 * The {@code BigInteger} 1
+	 */
 	public static final BigInteger BI1 = bi(1);
+	/**
+	 * The {@code BigInteger} -1
+	 */
 	public static final BigInteger BIM1 = bi(-1);
 
 	private static final BigDecimal E110 = bd("2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193");
@@ -36,6 +103,9 @@ public final class BigUtil
 	private static final List<BigDecimal> LN_CACHE = getLnCache();
 	private static final BigInteger MAX_CACHED_SQRT = bi(100);
 	private static final List<BigDecimal> SQRT_CACHE = getSqrtCache();
+	private static final int MAX_SAFE_POWER = 100000000;
+	private static final long MAX_SAFE_POWER_SQUARED = 10000000000000000L;
+	private static final double INVERSE_LOG_10_E = 1.0 / Math.log10(Math.E);
 
 	/**
 	 * Returns a {@code BigDecimal} representation of {@code val}.
@@ -437,22 +507,24 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  1.9803 , 0 ->  2
-	 *  1.9803 , 1 ->  2
-	 *  1.9803 , 2 ->  1.98
-	 *  1.9803 , 3 ->  1.98
-	 *  1.9805 , 3 ->  1.981
-	 *  1.9803 , 4 ->  1.9803
-	 *  1.9803 , 5 ->  1.9803
-	 *  0.00   , 0 ->  0
-	 *  0.00   , 1 ->  0
-	 *  0.00   , 2 ->  0
-	 *  0.00   , 3 ->  0
-	 * -1.0    , 1 -> -1
-	 * -1.55   , 0 -> -2
-	 * -1.55   , 1 -> -1.6
-	 * -1.55   , 2 -> -1.55
-	 * -1.55   , 3 -> -1.55
+	 * 10     , 0 -> 10
+	 * 10     , 1 -> 10
+	 * 10.0   , 0 -> 10
+	 * 10.0   , 1 -> 10
+	 * 10.01  , 0 -> 10
+	 * 10.01  , 1 -> 10
+	 * 10.01  , 2 -> 10.01
+	 *  1.9803, 0 ->  2
+	 *  1.9803, 1 ->  2
+	 *  1.9803, 2 ->  1.98
+	 *  1.9805, 3 ->  1.981
+	 *  1.9803, 5 ->  1.9803
+	 *  0.00  , 4 ->  0
+	 * -1.0   , 1 -> -1
+	 * -1.55  , 0 -> -2
+	 * -1.55  , 1 -> -1.6
+	 * -1.55  , 2 -> -1.55
+	 * -1.55  , 3 -> -1.55
 	 * </pre>
 	 */
 	public static BigDecimal round(BigDecimal val, int decimalPlaces)
@@ -472,7 +544,7 @@ public final class BigUtil
 	 */
 	public static BigDecimal round(BigDecimal val, int decimalPlaces, RoundingMode roundingMode)
 	{
-		return val.setScale(decimalPlaces, roundingMode).stripTrailingZeros();
+		return stripDecimalZeros(val.setScale(decimalPlaces, roundingMode));
 	}
 
 	/**
@@ -503,6 +575,8 @@ public final class BigUtil
 	 * The returned value will have the same sign sign as {@code val}, unless {@code val} is an integer,
 	 * in which case 0 will be returned. Any trailing zeros will be removed.
 	 * <p>
+	 * To have the decimal part represented as an integer, use {@link #wholeAndDecimalParts(BigDecimal)}.
+	 * <p>
 	 * Examples:
 	 * 
 	 * <pre>
@@ -527,7 +601,7 @@ public final class BigUtil
 	 * Returns a 2-element array of {@code BigIntegers}, consisting of:
 	 * <ol>
 	 * <li>{@link #wholePart(BigDecimal)}</li>
-	 * <li>{@link #decimalPart(BigDecimal)}, scaled as an integer</li>
+	 * <li>{@link #decimalPart(BigDecimal)}, but scaled as an integer</li>
 	 * </ol>
 	 * <p>
 	 * Examples:
@@ -729,6 +803,9 @@ public final class BigUtil
 		return absString.length();
 	}
 
+	/**
+	 * Returns the sum of the given values.
+	 */
 	public static BigDecimal add(BigDecimal a, BigDecimal b, BigDecimal... others)
 	{
 		BigDecimal result = a.add(b, MC110);
@@ -737,6 +814,9 @@ public final class BigUtil
 		return result;
 	}
 
+	/**
+	 * Returns the sum of the given values.
+	 */
 	public static BigDecimal add(BigDecimal a, BigInteger b, BigInteger... others)
 	{
 		BigDecimal result = a.add(bd(b), MC110);
@@ -745,6 +825,9 @@ public final class BigUtil
 		return result;
 	}
 
+	/**
+	 * Returns the sum of the given values.
+	 */
 	public static BigDecimal add(BigInteger a, BigDecimal b, BigDecimal... others)
 	{
 		BigDecimal result = bd(a).add(b, MC110);
@@ -753,6 +836,9 @@ public final class BigUtil
 		return result;
 	}
 
+	/**
+	 * Returns the sum of the given values.
+	 */
 	public static BigInteger add(BigInteger a, BigInteger b, BigInteger... others)
 	{
 		BigInteger result = a.add(b);
@@ -761,26 +847,41 @@ public final class BigUtil
 		return result;
 	}
 
+	/**
+	 * Returns {@code a} minus {@code b}.
+	 */
 	public static BigDecimal subtract(BigDecimal a, BigDecimal b)
 	{
 		return a.subtract(b, MC110);
 	}
 
+	/**
+	 * Returns {@code a} minus {@code b}.
+	 */
 	public static BigDecimal subtract(BigDecimal a, BigInteger b)
 	{
 		return a.subtract(bd(b), MC110);
 	}
 
+	/**
+	 * Returns {@code a} minus {@code b}.
+	 */
 	public static BigDecimal subtract(BigInteger a, BigDecimal b)
 	{
 		return b.subtract(bd(a), MC110);
 	}
 
+	/**
+	 * Returns {@code a} minus {@code b}.
+	 */
 	public static BigInteger subtract(BigInteger a, BigInteger b)
 	{
 		return a.subtract(b);
 	}
 
+	/**
+	 * Returns the product of the given values.
+	 */
 	public static BigDecimal multiply(BigDecimal a, BigDecimal b, BigDecimal... others)
 	{
 		BigDecimal result = a.multiply(b, MC110);
@@ -789,17 +890,26 @@ public final class BigUtil
 		return stripDecimalZeros(result);
 	}
 
+	/**
+	 * Returns the product of the given values.
+	 */
 	public static BigDecimal multiply(BigDecimal a, BigInteger b, BigInteger... others)
 	{
 		BigDecimal[] bdOthers = Arrays.stream(others).map(bi -> bd(bi)).toArray(BigDecimal[]::new);
 		return multiply(a, bd(b), bdOthers);
 	}
 
+	/**
+	 * Returns the product of the given values.
+	 */
 	public static BigDecimal multiply(BigInteger a, BigDecimal b, BigDecimal... others)
 	{
 		return multiply(bd(a), b, others);
 	}
 
+	/**
+	 * Returns the product of the given values.
+	 */
 	public static BigInteger multiply(BigInteger a, BigInteger b, BigInteger... others)
 	{
 		BigInteger result = a.multiply(b);
@@ -808,42 +918,73 @@ public final class BigUtil
 		return result;
 	}
 
+	/**
+	 * Returns {@code a} divided by {@code b}. If rounding is necessary because the
+	 * result is a non-terminating decimal, the result will be rounded to a large
+	 * number of significant figures (at least 100). The result will not have trailing
+	 * decimal zeros.
+	 */
 	public static BigDecimal divide(BigDecimal a, BigDecimal b)
 	{
 		return stripDecimalZeros(a.divide(b, MC110));
 	}
 
+	/**
+	 * Returns {@code a} divided by {@code b}. If rounding is necessary because the
+	 * result is a non-terminating decimal, the result will be rounded to a large
+	 * number of significant figures (at least 100). The result will not have trailing
+	 * decimal zeros.
+	 */
 	public static BigDecimal divide(BigDecimal a, BigInteger b)
 	{
 		return divide(a, bd(b));
 	}
 
+	/**
+	 * Returns {@code a} divided by {@code b}. If rounding is necessary because the
+	 * result is a non-terminating decimal, the result will be rounded to a large
+	 * number of significant figures (at least 100). The result will not have trailing
+	 * decimal zeros.
+	 */
 	public static BigDecimal divide(BigInteger a, BigDecimal b)
 	{
 		return divide(bd(a), b);
 	}
 
 	/**
-	 * Returns a {@code BigDecimal} since the result may not be an integer.
+	 * Returns {@code a} divided by {@code b}. Note that even though the arguments are
+	 * {@code BigInteger}, the result is a {@code BigDecimal} to allow decimal digits
+	 * in the result. If rounding is necessary because the result is a non-terminating
+	 * decimal, the result will be rounded to a large number of significant figures
+	 * (at least 100). The result will not have trailing decimal zeros.
 	 */
 	public static BigDecimal divide(BigInteger a, BigInteger b)
 	{
 		return divide(bd(a), bd(b));
 	}
 
+	/**
+	 * Returns {@code 1/val}. If rounding is necessary because the result is a
+	 * non-terminating decimal, the result will be rounded to a large number of
+	 * significant figures (at least 100). The result will not have trailing
+	 * decimal zeros.
+	 */
 	public static BigDecimal invert(BigDecimal val)
 	{
 		return divide(BD1, val);
 	}
 
+	/**
+	 * Returns {@code 1/val}. Note that even though the argument is a
+	 * {@code BigInteger}, the result is a {@code BigDecimal} to allow decimal
+	 * digits in the result. If rounding is necessary because the result is a
+	 * non-terminating decimal, the result will be rounded to a large number of
+	 * significant figures (at least 100). The result will not have trailing
+	 * decimal zeros.
+	 */
 	public static BigDecimal invert(BigInteger val)
 	{
 		return divide(BD1, val);
-	}
-
-	public static BigInteger[] floorDivideAndRemainder(BigInteger a, BigInteger b)
-	{
-		return a.divideAndRemainder(b);
 	}
 
 	/**
@@ -1022,7 +1163,7 @@ public final class BigUtil
 	 * Expects that {@code n} is greater than 0. Does no cache lookups or preconditions checks.
 	 */
 	// Calculates as a power, base^(1/n)
-	private static final BigDecimal calcNthRoot(BigDecimal base, BigInteger n)
+	private static BigDecimal calcNthRoot(BigDecimal base, BigInteger n)
 	{
 		if (isNeg(base))
 		{
@@ -1288,9 +1429,6 @@ public final class BigUtil
 		return finalized;
 	}
 
-	private static final int MAX_SAFE_POWER = 100000000;
-	private static final long MAX_SAFE_POWER_SQUARED = 10000000000000000L;
-
 	/**
 	 * Returns {@code base^power}.
 	 * <p>
@@ -1555,8 +1693,6 @@ public final class BigUtil
 		BigDecimal result = compareToOne > 0 ? currentResult.negate() : currentResult;
 		return result;
 	}
-
-	private static final double INVERSE_LOG_10_E = 1.0 / Math.log10(Math.E);
 
 	/**
 	 * Assumes that {@code val} is between 0 and 1, exclusive
