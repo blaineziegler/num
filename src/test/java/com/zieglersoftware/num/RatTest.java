@@ -418,6 +418,20 @@ public class RatTest
 	}
 
 	@Test
+	public void pow()
+	{
+		pow(2, 1, 3, 1, 8, 1);
+		pow(-8, 27, -2, 3, 9, 4);
+	}
+
+	private void pow(long baseNumerator, long baseDenominator, long exponentNumerator, long exponentDenominator, long expectedResultNumerator, long expectedResultDenominator)
+	{
+		Rat result = Rat.of(baseNumerator, baseDenominator).pow(Rat.of(exponentNumerator, exponentDenominator));
+		assertEquals(expectedResultNumerator, result.numerator().longValue());
+		assertEquals(expectedResultDenominator, result.denominator().longValue());
+	}
+
+	@Test
 	public void nthRoot()
 	{
 		nthRoot(0, 1);

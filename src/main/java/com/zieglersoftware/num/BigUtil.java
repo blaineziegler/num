@@ -20,9 +20,10 @@ import java.util.List;
  * {@code bi(arg)} to get a {@code BigInteger}. No need to think about whether to use a constructor or
  * {@code valueOf()}, no risk of accidentally building a {@code BigDecimal} from a double the wrong way, and
  * because then names {@code bd} and {@code bi} are fairly specific, unlike {@code valueOf}, it is practial
- * to statically import them and get instances extremely succintly. Additionally, if you wish, you can use
- * the static fields {@code BD0}, {@code BD1}, {@code BDM1}, {@code BI0}, {@code BI1}, and {@code BIM1} to
- * acquire instances representing 0, 1, or negative 1, and these can also be conveniently statically imported.
+ * to statically import them and get instances extremely succintly. Additionally, you can use the static fields
+ * {@code BD0}, {@code BD1}, {@code BDM1}, {@code BI0}, {@code BI1}, {@code BIM1}, {@code BDPI}, and {@code BDE}
+ * to acquire instances representing 0, 1, negative 1, pi, and e, and these can also be conveniently statically
+ * imported.
  * <p>
  * Comparison methods are provided for comparing two {@code BigDecimals}, two {@code BigIntegers}, or one of each.
  * {@code equal}, {@code notEqual}, {@code greater}, {@code less}, {@code greaterOrEqual}, and {@code lessOrEqual}
@@ -90,7 +91,16 @@ public final class BigUtil
 	 */
 	public static final BigInteger BIM1 = bi(-1);
 
-	private static final BigDecimal E110 = bd("2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193");
+	/**
+	 * A {@code BigDecimal} representation of {@code pi} approximated to 110 decimal places.
+	 */
+	public static final BigDecimal BDPI = bd("3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651");
+
+	/**
+	 * A {@code BigDecimal} representation of {@code e} approximated to 110 decimal places.
+	 */
+	public static final BigDecimal BDE = bd("2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193");
+
 	private static final BigInteger BI2 = bi(2);
 	private static final MathContext MC110 = new MathContext(110);
 	private static final MathContext MC106 = new MathContext(106);
@@ -1586,11 +1596,11 @@ public final class BigUtil
 	private static BigDecimal expInternal(BigDecimal power)
 	{
 		if (isInt(power))
-			return powInternal(E110, power.longValueExact());
+			return powInternal(BDE, power.longValueExact());
 		boolean negative = isNeg(power);
 		if (negative)
 			power = power.negate();
-		BigDecimal wholePartContribution = powInternal(E110, wholePart(power));
+		BigDecimal wholePartContribution = powInternal(BDE, wholePart(power));
 		power = decimalPart(power);
 		power = divide(power, EXP_DIVISION);
 		BigDecimal previousResult = null;
