@@ -19,37 +19,42 @@ import java.math.RoundingMode;
 import com.zieglersoftware.assertions.Assertions;
 
 /**
- * Immutable class that represents a rational number, i.e., a number that can be
+ * Immutable class that represents a rational number; i.e., a number that can be
  * expressed exactly as the ratio of two integers (including whole numbers, with
- * a denomiator of one). Any reasonably sized rational number can be represented
- * exactly, but if a numerator or denominator approaches the magnitude
- * {@code 2}<sup>{@code Integer.MAX_VALUE}</sup>, overflow may occur.
- * <p>
- * {@link #toString()} always prints the fraction in lowest terms.
+ * a denomiator of one). The fraction will always be viewed in lowest terms when
+ * calling methods such as {@link #toString()}, {@link #numerator()}, and
+ * {@link #denominator()}.
  * <p>
  * Instances of {@code Rat} are acquired from the static {@code rat()} methods.
  * It is recommended to statically import {@code rat()} for convenience. There
  * are many overloads of {@code rat()} for acquiring {@code Rat} from different
- * kinds of inputs. The string overload takes an arbitrary arithmetic expression
- * as its argument, evaluates it, and returns the result as a {@code Rat}. The
- * static instances {@code ZERO}, {@code ONE}, {@code PI}, and {@code E} are also
+ * inputs. The string overload takes an arbitrary arithmetic expression as its
+ * argument, evaluates it, and returns the result as a {@code Rat}. The static
+ * instances {@code ZERO}, {@code ONE}, {@code PI}, and {@code E} are also
  * available.
+ * <p>
+ * Arithmetic methods include {@code negate}, {@code abs}, {@code invert},
+ * {@code plus}, {@code minus}, {@code times}, {@code dividedBy}, {@code sqrt},
+ * {@code nthRoot}, {@code pow}, {@code exp}, {@code log}, and {@code ln}.
+ * Whenever possible, these arithmetic methods return an exact result; for example,
+ * 
+ * <pre>
+ * {@code rat(-8,27).pow(rat(-2,3)) ->  9/4}
+ * {@code rat(9,4).log(rat(8,27))   -> -2/3}
+ * </pre>
+ * 
+ * If the result is irrational, a very high-precision approximation is returned
+ * (at least 100 significant figures in the decimal representation).
  * <p>
  * Comparison methods {@code equal}, {@code notEqual}, {@code greater}, {@code less},
  * {@code greaterOrEqual}, {@code lessOrEqual}, {@code isPositive}, {@code isNegative},
  * and {@code isZero} are provided, as well as the method {@code isInteger}.
  * <p>
- * Arithmetic methods include {@code negate}, {@code abs}, {@code invert}, {@code plus},
- * {@code minus}, {@code times}, {@code dividedBy}, {@code sqrt}, {@code nthRoot},
- * {@code pow}, {@code exp}, {@code log}, and {@code ln}.
- * <p>
- * Whenever possible, these arithmetic methods return an exact result; for example,
- * {@code rat(-8,27).pow(rat(-2,3)) => 9/4}, and
- * {@code rat(9,4).log(rat(8,27)) => -2/3}. If the result is irrational, a very
- * high-precision approximation is returned (at least 100 significant figures in the
- * decimal representation).
- * <p>
  * All method arguments must not be null unless otherwise stated.
+ * <p>
+ * Any reasonably sized rational number can be represented exactly, but if a numerator
+ * or denominator approaches the magnitude {@code 2}<sup>{@code Integer.MAX_VALUE}</sup>,
+ * overflow may occur.
  */
 public final class Rat implements Comparable<Rat>
 {
@@ -546,10 +551,11 @@ public final class Rat implements Comparable<Rat>
 	@Override
 	public boolean equals(Object obj)
 	{
+		if (this == obj)
+			return true;
 		if (!(obj instanceof Rat))
 			return false;
-		Rat other = (Rat) obj;
-		return equal(other);
+		return equal((Rat) obj);
 	}
 
 	/**
