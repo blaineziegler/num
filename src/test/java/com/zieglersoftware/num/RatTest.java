@@ -1,5 +1,6 @@
 package com.zieglersoftware.num;
 
+import static com.zieglersoftware.num.Rat.rat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -18,402 +19,402 @@ public class RatTest
 	@Test
 	public void constants()
 	{
-		assertEquals(Math.PI, Rat.PI.toDouble(), 0);
-		assertEquals(Math.E, Rat.E.toDouble(), 0);
+		assertEquals(Math.PI, Rat.PI.toDouble(), DOUBLE_COMPARISON_TOLERANCE);
+		assertEquals(Math.E, Rat.E.toDouble(), DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
-	public void of()
+	public void factories()
 	{
-		ofLong(0, 0);
-		ofLong(1, 1);
-		ofLong(-1, -1);
-		ofLong(100, 100);
-		ofLong(-100, -100);
-		ofLong(999, 999);
-		ofLong(-999, -999);
-		ofLong(1000, 1000);
-		ofLong(-1000, -1000);
-		ofLong(1001, 1001);
-		ofLong(-1001, -1001);
-		ofLong(1000000000000000L, 1000000000000000L);
-		ofLong(-1000000000000000L, -1000000000000000L);
+		factoryFromLong(0, 0);
+		factoryFromLong(1, 1);
+		factoryFromLong(-1, -1);
+		factoryFromLong(100, 100);
+		factoryFromLong(-100, -100);
+		factoryFromLong(999, 999);
+		factoryFromLong(-999, -999);
+		factoryFromLong(1000, 1000);
+		factoryFromLong(-1000, -1000);
+		factoryFromLong(1001, 1001);
+		factoryFromLong(-1001, -1001);
+		factoryFromLong(1000000000000000L, 1000000000000000L);
+		factoryFromLong(-1000000000000000L, -1000000000000000L);
 
-		ofBigInteger(BigInteger.valueOf(0), 0, 1);
-		ofBigInteger(BigInteger.valueOf(1), 1, 1);
-		ofBigInteger(BigInteger.valueOf(-1), -1, 1);
-		ofBigInteger(BigInteger.valueOf(100), 100, 1);
-		ofBigInteger(BigInteger.valueOf(-100), -100, 1);
-		ofBigInteger(new BigInteger("1000000000000000"), 1000000000000000L, 1);
-		ofBigInteger(new BigInteger("-1000000000000000"), -1000000000000000L, 1);
+		factoryFromBigInteger(BigInteger.valueOf(0), 0, 1);
+		factoryFromBigInteger(BigInteger.valueOf(1), 1, 1);
+		factoryFromBigInteger(BigInteger.valueOf(-1), -1, 1);
+		factoryFromBigInteger(BigInteger.valueOf(100), 100, 1);
+		factoryFromBigInteger(BigInteger.valueOf(-100), -100, 1);
+		factoryFromBigInteger(new BigInteger("1000000000000000"), 1000000000000000L, 1);
+		factoryFromBigInteger(new BigInteger("-1000000000000000"), -1000000000000000L, 1);
 
-		ofLongs(0, 1, 0);
-		ofLongs(0, -1, 0);
-		ofLongs(-0, -1, 0);
-		ofLongs(0, 10, 0);
-		ofLongs(-0, 10, 0);
-		ofLongs(1, 1, 1);
-		ofLongs(-1, 1, -1);
-		ofLongs(1, -1, -1);
-		ofLongs(-1, -1, 1);
-		ofLongs(1, 2, 1, 2);
-		ofLongs(-1, 2, -1, 2);
-		ofLongs(2, 4, 1, 2);
-		ofLongs(-2, 4, -1, 2);
-		ofLongs(30, 40, 3, 4);
-		ofLongs(30, -40, -3, 4);
-		ofLongs(1, 3, 1, 3);
-		ofLongs(-1, 3, -1, 3);
-		ofLongs(2, 3, 2, 3);
-		ofLongs(-2, 3, -2, 3);
-		ofLongs(3, 3, 1);
-		ofLongs(-3, 3, -1);
-		ofLongs(5, 3, 5, 3);
-		ofLongs(-5, 3, -5, 3);
-		ofLongs(10, 6, 5, 3);
-		ofLongs(-10, 6, -5, 3);
-		ofLongs(9, 27, 1, 3);
-		ofLongs(-9, 27, -1, 3);
-		ofLongs(1, 10, 1, 10);
-		ofLongs(1, 100, 1, 100);
-		ofLongs(1, 1000, 1, 1000);
-		ofLongs(1, 10000, 1, 10000);
-		ofLongs(1, 100000, 1, 100000);
+		factoryFromLongs(0, 1, 0);
+		factoryFromLongs(0, -1, 0);
+		factoryFromLongs(-0, -1, 0);
+		factoryFromLongs(0, 10, 0);
+		factoryFromLongs(-0, 10, 0);
+		factoryFromLongs(1, 1, 1);
+		factoryFromLongs(-1, 1, -1);
+		factoryFromLongs(1, -1, -1);
+		factoryFromLongs(-1, -1, 1);
+		factoryFromLongs(1, 2, 1, 2);
+		factoryFromLongs(-1, 2, -1, 2);
+		factoryFromLongs(2, 4, 1, 2);
+		factoryFromLongs(-2, 4, -1, 2);
+		factoryFromLongs(30, 40, 3, 4);
+		factoryFromLongs(30, -40, -3, 4);
+		factoryFromLongs(1, 3, 1, 3);
+		factoryFromLongs(-1, 3, -1, 3);
+		factoryFromLongs(2, 3, 2, 3);
+		factoryFromLongs(-2, 3, -2, 3);
+		factoryFromLongs(3, 3, 1);
+		factoryFromLongs(-3, 3, -1);
+		factoryFromLongs(5, 3, 5, 3);
+		factoryFromLongs(-5, 3, -5, 3);
+		factoryFromLongs(10, 6, 5, 3);
+		factoryFromLongs(-10, 6, -5, 3);
+		factoryFromLongs(9, 27, 1, 3);
+		factoryFromLongs(-9, 27, -1, 3);
+		factoryFromLongs(1, 10, 1, 10);
+		factoryFromLongs(1, 100, 1, 100);
+		factoryFromLongs(1, 1000, 1, 1000);
+		factoryFromLongs(1, 10000, 1, 10000);
+		factoryFromLongs(1, 100000, 1, 100000);
 
-		ofBigIntegers(BigInteger.valueOf(0), BigInteger.valueOf(1), 0);
-		ofBigIntegers(BigInteger.valueOf(0), BigInteger.valueOf(-1), 0);
-		ofBigIntegers(BigInteger.valueOf(-0), BigInteger.valueOf(-1), 0);
-		ofBigIntegers(BigInteger.valueOf(0), BigInteger.valueOf(10), 0);
-		ofBigIntegers(BigInteger.valueOf(-0), BigInteger.valueOf(10), 0);
-		ofBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(1), 1);
-		ofBigIntegers(BigInteger.valueOf(-1), BigInteger.valueOf(1), -1);
-		ofBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(-1), -1);
-		ofBigIntegers(BigInteger.valueOf(-1), BigInteger.valueOf(-1), 1);
-		ofBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(2), 1, 2);
-		ofBigIntegers(BigInteger.valueOf(-1), BigInteger.valueOf(2), -1, 2);
-		ofBigIntegers(BigInteger.valueOf(2), BigInteger.valueOf(4), 1, 2);
-		ofBigIntegers(BigInteger.valueOf(-2), BigInteger.valueOf(4), -1, 2);
-		ofBigIntegers(BigInteger.valueOf(30), BigInteger.valueOf(40), 3, 4);
-		ofBigIntegers(BigInteger.valueOf(30), BigInteger.valueOf(-40), -3, 4);
-		ofBigIntegers(new BigInteger("100000000000000000000000000000000000000000"), new BigInteger("100000000000000000000000000000000000000000"), 1);
-		ofBigIntegers(new BigInteger("-100000000000000000000000000000000000000000"), new BigInteger("100000000000000000000000000000000000000000"), -1);
-		ofBigIntegers(new BigInteger("100000000000000000000000000000000000000000"), new BigInteger("-100000000000000000000000000000000000000000"), -1);
-		ofBigIntegers(new BigInteger("-100000000000000000000000000000000000000000"), new BigInteger("-100000000000000000000000000000000000000000"), 1);
-		ofBigIntegers(new BigInteger("200000000000000000000000000000000000000000"), new BigInteger("100000000000000000000000000000000000000000"), 2);
-		ofBigIntegers(new BigInteger("-200000000000000000000000000000000000000000"), new BigInteger("100000000000000000000000000000000000000000"), -2);
-		ofBigIntegers(new BigInteger("200000000000000000000000000000000000000000"), new BigInteger("-100000000000000000000000000000000000000000"), -2);
-		ofBigIntegers(new BigInteger("-200000000000000000000000000000000000000000"), new BigInteger("-100000000000000000000000000000000000000000"), 2);
-		ofBigIntegers(new BigInteger("100000000000000000000000000000000000000000"), new BigInteger("200000000000000000000000000000000000000000"), 1, 2);
-		ofBigIntegers(new BigInteger("-100000000000000000000000000000000000000000"), new BigInteger("200000000000000000000000000000000000000000"), -1, 2);
-		ofBigIntegers(new BigInteger("100000000000000000000000000000000000000000"), new BigInteger("-200000000000000000000000000000000000000000"), -1, 2);
-		ofBigIntegers(new BigInteger("-100000000000000000000000000000000000000000"), new BigInteger("-200000000000000000000000000000000000000000"), 1, 2);
-		ofBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(10), 1, 10);
-		ofBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(100), 1, 100);
-		ofBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(1000), 1, 1000);
-		ofBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(10000), 1, 10000);
-		ofBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(100000), 1, 100000);
+		factoryFromBigIntegers(BigInteger.valueOf(0), BigInteger.valueOf(1), 0);
+		factoryFromBigIntegers(BigInteger.valueOf(0), BigInteger.valueOf(-1), 0);
+		factoryFromBigIntegers(BigInteger.valueOf(-0), BigInteger.valueOf(-1), 0);
+		factoryFromBigIntegers(BigInteger.valueOf(0), BigInteger.valueOf(10), 0);
+		factoryFromBigIntegers(BigInteger.valueOf(-0), BigInteger.valueOf(10), 0);
+		factoryFromBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(1), 1);
+		factoryFromBigIntegers(BigInteger.valueOf(-1), BigInteger.valueOf(1), -1);
+		factoryFromBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(-1), -1);
+		factoryFromBigIntegers(BigInteger.valueOf(-1), BigInteger.valueOf(-1), 1);
+		factoryFromBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(2), 1, 2);
+		factoryFromBigIntegers(BigInteger.valueOf(-1), BigInteger.valueOf(2), -1, 2);
+		factoryFromBigIntegers(BigInteger.valueOf(2), BigInteger.valueOf(4), 1, 2);
+		factoryFromBigIntegers(BigInteger.valueOf(-2), BigInteger.valueOf(4), -1, 2);
+		factoryFromBigIntegers(BigInteger.valueOf(30), BigInteger.valueOf(40), 3, 4);
+		factoryFromBigIntegers(BigInteger.valueOf(30), BigInteger.valueOf(-40), -3, 4);
+		factoryFromBigIntegers(new BigInteger("100000000000000000000000000000000000000000"), new BigInteger("100000000000000000000000000000000000000000"), 1);
+		factoryFromBigIntegers(new BigInteger("-100000000000000000000000000000000000000000"), new BigInteger("100000000000000000000000000000000000000000"), -1);
+		factoryFromBigIntegers(new BigInteger("100000000000000000000000000000000000000000"), new BigInteger("-100000000000000000000000000000000000000000"), -1);
+		factoryFromBigIntegers(new BigInteger("-100000000000000000000000000000000000000000"), new BigInteger("-100000000000000000000000000000000000000000"), 1);
+		factoryFromBigIntegers(new BigInteger("200000000000000000000000000000000000000000"), new BigInteger("100000000000000000000000000000000000000000"), 2);
+		factoryFromBigIntegers(new BigInteger("-200000000000000000000000000000000000000000"), new BigInteger("100000000000000000000000000000000000000000"), -2);
+		factoryFromBigIntegers(new BigInteger("200000000000000000000000000000000000000000"), new BigInteger("-100000000000000000000000000000000000000000"), -2);
+		factoryFromBigIntegers(new BigInteger("-200000000000000000000000000000000000000000"), new BigInteger("-100000000000000000000000000000000000000000"), 2);
+		factoryFromBigIntegers(new BigInteger("100000000000000000000000000000000000000000"), new BigInteger("200000000000000000000000000000000000000000"), 1, 2);
+		factoryFromBigIntegers(new BigInteger("-100000000000000000000000000000000000000000"), new BigInteger("200000000000000000000000000000000000000000"), -1, 2);
+		factoryFromBigIntegers(new BigInteger("100000000000000000000000000000000000000000"), new BigInteger("-200000000000000000000000000000000000000000"), -1, 2);
+		factoryFromBigIntegers(new BigInteger("-100000000000000000000000000000000000000000"), new BigInteger("-200000000000000000000000000000000000000000"), 1, 2);
+		factoryFromBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(10), 1, 10);
+		factoryFromBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(100), 1, 100);
+		factoryFromBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(1000), 1, 1000);
+		factoryFromBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(10000), 1, 10000);
+		factoryFromBigIntegers(BigInteger.valueOf(1), BigInteger.valueOf(100000), 1, 100000);
 
-		ofBigDecimal(new BigDecimal(0), 0, 1);
-		ofBigDecimal(new BigDecimal("00"), 0, 1);
-		ofBigDecimal(new BigDecimal("0"), 0, 1);
-		ofBigDecimal(new BigDecimal("0."), 0, 1);
-		ofBigDecimal(new BigDecimal("0.0"), 0, 1);
-		ofBigDecimal(new BigDecimal("0.00"), 0, 1);
-		ofBigDecimal(new BigDecimal(1), 1, 1);
-		ofBigDecimal(new BigDecimal(-1), -1, 1);
-		ofBigDecimal(new BigDecimal("01"), 1, 1);
-		ofBigDecimal(new BigDecimal("1"), 1, 1);
-		ofBigDecimal(new BigDecimal("1."), 1, 1);
-		ofBigDecimal(new BigDecimal("1.0"), 1, 1);
-		ofBigDecimal(new BigDecimal("1.0000"), 1, 1);
-		ofBigDecimal(new BigDecimal("-1.0000"), -1, 1);
-		ofBigDecimal(new BigDecimal("-0.1"), -1, 10);
-		ofBigDecimal(new BigDecimal("2.5000"), 5, 2);
-		ofBigDecimal(new BigDecimal("-2.5000"), -5, 2);
-		ofBigDecimal(new BigDecimal(".333"), 333, 1000);
-		ofBigDecimal(new BigDecimal("-.333"), -333, 1000);
-		ofBigDecimal(new BigDecimal(".333333"), 333333, 1000000);
-		ofBigDecimal(new BigDecimal("-.333333"), -333333, 1000000);
-		ofBigDecimal(new BigDecimal("33.333333"), (33 * 1000000) + 333333, 1000000);
-		ofBigDecimal(new BigDecimal("-33.333333"), -(33 * 1000000) - 333333, 1000000);
-		ofBigDecimal(new BigDecimal("11111.11111"), (11111 * 100000) + 11111, 100000);
-		ofBigDecimal(new BigDecimal("-11111.11111"), -(11111 * 100000) - 11111, 100000);
-		ofBigDecimal(new BigDecimal("0.500000000000000000000000000000000000000000000000000"), 1, 2);
-		ofBigDecimal(new BigDecimal("-0.500000000000000000000000000000000000000000000000000"), -1, 2);
-		ofBigDecimal(new BigDecimal("0.1"), 1, 10);
-		ofBigDecimal(new BigDecimal("0.01"), 1, 100);
-		ofBigDecimal(new BigDecimal("0.001"), 1, 1000);
-		ofBigDecimal(new BigDecimal("0.0001"), 1, 10000);
-		ofBigDecimal(new BigDecimal("0.00001"), 1, 100000);
+		factoryFromBigDecimal(new BigDecimal(0), 0, 1);
+		factoryFromBigDecimal(new BigDecimal("00"), 0, 1);
+		factoryFromBigDecimal(new BigDecimal("0"), 0, 1);
+		factoryFromBigDecimal(new BigDecimal("0."), 0, 1);
+		factoryFromBigDecimal(new BigDecimal("0.0"), 0, 1);
+		factoryFromBigDecimal(new BigDecimal("0.00"), 0, 1);
+		factoryFromBigDecimal(new BigDecimal(1), 1, 1);
+		factoryFromBigDecimal(new BigDecimal(-1), -1, 1);
+		factoryFromBigDecimal(new BigDecimal("01"), 1, 1);
+		factoryFromBigDecimal(new BigDecimal("1"), 1, 1);
+		factoryFromBigDecimal(new BigDecimal("1."), 1, 1);
+		factoryFromBigDecimal(new BigDecimal("1.0"), 1, 1);
+		factoryFromBigDecimal(new BigDecimal("1.0000"), 1, 1);
+		factoryFromBigDecimal(new BigDecimal("-1.0000"), -1, 1);
+		factoryFromBigDecimal(new BigDecimal("-0.1"), -1, 10);
+		factoryFromBigDecimal(new BigDecimal("2.5000"), 5, 2);
+		factoryFromBigDecimal(new BigDecimal("-2.5000"), -5, 2);
+		factoryFromBigDecimal(new BigDecimal(".333"), 333, 1000);
+		factoryFromBigDecimal(new BigDecimal("-.333"), -333, 1000);
+		factoryFromBigDecimal(new BigDecimal(".333333"), 333333, 1000000);
+		factoryFromBigDecimal(new BigDecimal("-.333333"), -333333, 1000000);
+		factoryFromBigDecimal(new BigDecimal("33.333333"), (33 * 1000000) + 333333, 1000000);
+		factoryFromBigDecimal(new BigDecimal("-33.333333"), -(33 * 1000000) - 333333, 1000000);
+		factoryFromBigDecimal(new BigDecimal("11111.11111"), (11111 * 100000) + 11111, 100000);
+		factoryFromBigDecimal(new BigDecimal("-11111.11111"), -(11111 * 100000) - 11111, 100000);
+		factoryFromBigDecimal(new BigDecimal("0.500000000000000000000000000000000000000000000000000"), 1, 2);
+		factoryFromBigDecimal(new BigDecimal("-0.500000000000000000000000000000000000000000000000000"), -1, 2);
+		factoryFromBigDecimal(new BigDecimal("0.1"), 1, 10);
+		factoryFromBigDecimal(new BigDecimal("0.01"), 1, 100);
+		factoryFromBigDecimal(new BigDecimal("0.001"), 1, 1000);
+		factoryFromBigDecimal(new BigDecimal("0.0001"), 1, 10000);
+		factoryFromBigDecimal(new BigDecimal("0.00001"), 1, 100000);
 
-		ofDouble(1D, 1, 1);
-		ofDouble(-1D, -1, 1);
-		ofDouble(0.1, 1, 10);
-		ofDouble(-0.1, -1, 10);
-		ofDouble(2.5, 5, 2);
-		ofDouble(-2.5, -5, 2);
-		ofDouble(.333, 333, 1000);
-		ofDouble(-.333, -333, 1000);
-		ofDouble(.333333, 333333, 1000000);
-		ofDouble(-.333333, -333333, 1000000);
-		ofDouble(33.333333, (33 * 1000000) + 333333, 1000000);
-		ofDouble(-33.333333, -(33 * 1000000) - 333333, 1000000);
-		ofDouble(11111.11111, (11111 * 100000) + 11111, 100000);
-		ofDouble(-11111.11111, -(11111 * 100000) - 11111, 100000);
-		ofDouble(0.1, 1, 10);
-		ofDouble(0.01, 1, 100);
-		ofDouble(0.001, 1, 1000);
-		ofDouble(0.0001, 1, 10000);
-		ofDouble(0.00001, 1, 100000);
+		factoryFromDouble(1D, 1, 1);
+		factoryFromDouble(-1D, -1, 1);
+		factoryFromDouble(0.1, 1, 10);
+		factoryFromDouble(-0.1, -1, 10);
+		factoryFromDouble(2.5, 5, 2);
+		factoryFromDouble(-2.5, -5, 2);
+		factoryFromDouble(.333, 333, 1000);
+		factoryFromDouble(-.333, -333, 1000);
+		factoryFromDouble(.333333, 333333, 1000000);
+		factoryFromDouble(-.333333, -333333, 1000000);
+		factoryFromDouble(33.333333, (33 * 1000000) + 333333, 1000000);
+		factoryFromDouble(-33.333333, -(33 * 1000000) - 333333, 1000000);
+		factoryFromDouble(11111.11111, (11111 * 100000) + 11111, 100000);
+		factoryFromDouble(-11111.11111, -(11111 * 100000) - 11111, 100000);
+		factoryFromDouble(0.1, 1, 10);
+		factoryFromDouble(0.01, 1, 100);
+		factoryFromDouble(0.001, 1, 1000);
+		factoryFromDouble(0.0001, 1, 10000);
+		factoryFromDouble(0.00001, 1, 100000);
 
-		ofString("0", 0);
-		ofString("00000000000", 0);
-		ofString("1", 1);
-		ofString("-1", -1);
-		ofString("0001", 1);
-		ofString("-001", -1);
-		ofString("0001.000000", 1);
-		ofString("-001.000000", -1);
-		ofString("1.000000000", 1);
-		ofString("-1.00000000000", -1);
-		ofString("0.1", 1, 10);
-		ofString("0.01", 1, 100);
-		ofString("0.001", 1, 1000);
-		ofString("0.0001", 1, 10000);
-		ofString("0.00001", 1, 100000);
-		ofString("1/10", 1, 10);
-		ofString("1/100", 1, 100);
-		ofString("1/1000", 1, 1000);
-		ofString("1/10000", 1, 10000);
-		ofString("1/100000", 1, 100000);
-		ofString("-0.1", -1, 10);
-		ofString(".1", 1, 10);
-		ofString("-.1", -1, 10);
-		ofString("-0.01", -1, 100);
-		ofString(".01", 1, 100);
-		ofString("-.01", -1, 100);
-		ofString("1.0", 1, 1);
-		ofString("-1.0", -1, 1);
-		ofString("1.1", 11, 10);
-		ofString("-1.1", -11, 10);
-		ofString("1.10", 11, 10);
-		ofString("-1.10", -11, 10);
-		ofString("01.10", 11, 10);
-		ofString("-01.10", -11, 10);
-		ofString("1.111", 1111, 1000);
-		ofString("-1.111", -1111, 1000);
-		ofString(".5", 1, 2);
-		ofString("-.5", -1, 2);
-		ofString("0.5", 1, 2);
-		ofString("-0.5", -1, 2);
-		ofString(".75", 3, 4);
-		ofString("-.75", -3, 4);
-		ofString("1.75", 7, 4);
-		ofString("-1.75", -7, 4);
-		ofString("0.001", 1, 1000);
-		ofString("-0.001", -1, 1000);
-		ofString("0.002", 1, 500);
-		ofString("-0.002", -1, 500);
-		ofString("0.004", 1, 250);
-		ofString("-0.004", -1, 250);
-		ofString("0.005", 1, 200);
-		ofString("-0.005", -1, 200);
-		ofString("0.010", 1, 100);
-		ofString("-0.010", -1, 100);
-		ofString("--1", 1);
-		ofString("0+5", 5);
-		ofString("1+1", 2);
-		ofString("1-1", 0);
-		ofString("1+5", 6);
-		ofString("-1+5", 4);
-		ofString("0+-5", -5);
-		ofString("1+-5", -4);
-		ofString("-1+-5", -6);
-		ofString("0-5", -5);
-		ofString("1-5", -4);
-		ofString("-1-5", -6);
-		ofString("0--5", 5);
-		ofString("1--5", 6);
-		ofString("-1--5", 4);
-		ofString("-3+4+5-10--30+15-51", -10);
-		ofString("0*1", 0);
-		ofString("2*-3*4", -24);
-		ofString("0/1", 0);
-		ofString("3/1.5", 2);
-		ofString("1.5/3", 1, 2);
-		ofString("1.5/3.5", 3, 7);
-		ofString("-1.5/3.5", -3, 7);
-		ofString("1.5/-3.5", -3, 7);
-		ofString("-1.5/-3.5", 3, 7);
-		ofString("2/-3/4", 2, -12);
-		ofString("-2/-3*4*5/6", 40, 18);
-		ofString("100/30", 10, 3);
-		ofString("1+2*3", 7);
-		ofString("1*2+3", 5);
-		ofString("1-2/3+4", 13, 3);
-		ofString("1-2+3*4", 11);
-		ofString("1*2-3/4", 5, 4);
-		ofString("1*2/3+4", 14, 3);
-		ofString("1^0", 1);
-		ofString("2^0", 1);
-		ofString("0^1", 0);
-		ofString("0^-1", 0);
-		ofString("0^43.1234", 0);
-		ofString("0.000^-43.1234", 0);
-		ofString("1^1", 1);
-		ofString("1^2", 1);
-		ofString("1^-1", 1);
-		ofString("-1^1", -1);
-		ofString("-1^-1", -1);
-		ofString("3^2", 9);
-		ofString("2^3", 8);
-		ofString("-3^2", -9);
-		ofString("-2^3", -8);
-		ofString("3^-2", 1, 9);
-		ofString("2^-3", 1, 8);
-		ofString("-3^-2", -1, 9);
-		ofString("-2^-3", -1, 8);
-		ofString("4^3^2", 262144);
-		ofString("2^2^3-2^-2/3^2+4+5^2-3*2^2*5", 8099, 36);
-		ofString("(0+5)", 5);
-		ofString("(2)-(1)", 1);
-		ofString("(1+-1)+2^2", 4);
-		ofString("2(3*4)", 24);
-		ofString("(1)(2)3(4)5(((6)7)8)", 40320);
-		ofString("1+(1)(2)3(4)5(((6)7)8)+1", 40322);
-		ofString("(3*4)2", 24);
-		ofString("(1+2)(3*4)", 36);
-		ofString("(1+2)-(3*4)", -9);
-		ofString("(1+2)5(3*4)", 180);
-		ofString("(1+2)-5(3*4)", -57);
-		ofString("(1+2)(1+2)(1+2)", 27);
-		ofString("(2*-3*4)", -24);
-		ofString("(3^2)", 9);
-		ofString("(-3)^2", 9);
-		ofString("2^2^3-(2^2)^3*(1+2)/(3/(4))", 0);
-		ofString("(-1)", -1);
-		ofString(".0-(1)", -1);
-		ofString("-1*(1)", -1);
-		ofString("-(1)", -1);
-		ofString("-(-(1))", 1);
-		ofString("-(-(-(1)))", -1);
-		ofString("-(1+2)+3", 0);
-		ofString("-(-(1+2)+3)+4", 4);
-		ofString("-(-(-(1+2)+3)+4)+5", 1);
-		ofString("0-(1+2)", -3);
-		ofString("-1*(1+2)", -3);
-		ofString("-(1+2)", -3);
-		ofString("2^(0-(1))", 1, 2);
-		ofString("2^(-1*(1))", 1, 2);
-		ofString("2^(-(1))", 1, 2);
-		ofString("2^0-(2)", -1);
-		ofString("2^(.0-(2))", 1, 4);
-		ofString("2^(-1*(2))", 1, 4);
-		ofString("2^-(2)", 1, 4);
-		ofString("(-1)^1", -1);
-		ofString("(-1)^3", -1);
-		ofString("(-1)^(1/3)", -1);
-		ofString("(-1)^(2/3)", 1);
-		ofString("(-1)^(3/3)", -1);
-		ofString("(-1)^(4/3)", 1);
-		ofString("(-1)^(5/3)", -1);
-		ofString("(-32)^(1/5)", -2);
-		ofString("(-32)^(2/5)", 4);
-		ofString("(-32)^(3/5)", -8);
-		ofString("(-32)^(4/5)", 16);
-		ofString("(-32)^(5/5)", -32);
-		ofString("(-1/8)^(1/3)", -1, 2);
-		ofString("(-1/8)^(2/3)", 1, 4);
-		ofString("(-1/8)^(3/3)", -1, 8);
-		ofString("(-1/8)^(4/3)", 1, 16);
-		ofString("(-1/8)^(5/3)", -1, 32);
-		ofString("2^-2", 1, 4);
-		ofString("2^-1*2", 1);
-		ofString("2^0-2", -1);
-		ofString("2^-(1/(2^-2))", 1, 16);
-		ofString("2^-(1/-(2^-2))", 16);
-		ofString("3^(-1+2)", 3);
-		ofString("3^--2", 9);
-		ofString("3^--2^3", 6561);
-		ofString("-2^2", -4);
-		ofString("4^(1/2)", 2);
-		ofString("4^(-1/2)", 1, 2);
-		ofString("(1/9)^(1/2)", 1, 3);
-		ofString("(1/9)^(-1/2)", 3);
-		ofString("(4/9)^(1/2)", 2, 3);
-		ofString("(4/9)^(-1/2)", 3, 2);
-		ofString("4^(3/2)", 8);
-		ofString("4^(-3/-2)", 8);
-		ofString("4^(-3/2)", 1, 8);
-		ofString("4^(3/-2)", 1, 8);
-		ofString("(4/9)^(3/2)", 8, 27);
-		ofString("(4/9)^(-3/2)", 27, 8);
-		ofString("(4/9)^(-30/2)", 205891132094649L, 1073741824);
-		ofString("-4^(1/2)", -2);
-		ofString("-4^(-1/2)", -1, 2);
-		ofString("9^(1/2)", 3);
-		ofString("25^(1/2)", 5);
-		ofString("100^(1/2)", 10);
-		ofString("961^(1/2)", 31);
-		ofString("9801^(1/2)", 99);
-		ofString("10000^(1/2)", 100);
-		ofString("8^(1/3)", 2);
-		ofString("27^(1/3)", 3);
-		ofString("1000^(1/3)", 10);
-		ofString("8000^(1/3)", 20);
-		ofString("4.0^(0.50000)", 2);
-		ofString("--4^(-.5)", 1, 2);
-		ofString("(-2)^2", 4);
-		ofString("-(2)^2", -4);
-		ofString("-(2+1)^2", -9);
-		ofString("-2^-2", -1, 4);
-		ofString("2^-2^2", 1, 16);
-		ofString("-2^-2^2", -1, 16);
-		ofString("-2^-(2)^2", -1, 16);
-		ofString("-2^(-2)^2", -16);
-		ofString("-4^-2^-1", -1, 2);
-		ofString("-2^-2(4^-2^-1)^2", -1, 16);
-		ofString("-2.0^-2.0(4.0^-2.0^-1.0)^(2.2-.2)", -1, 16);
+		factoryFromString("0", 0);
+		factoryFromString("00000000000", 0);
+		factoryFromString("1", 1);
+		factoryFromString("-1", -1);
+		factoryFromString("0001", 1);
+		factoryFromString("-001", -1);
+		factoryFromString("0001.000000", 1);
+		factoryFromString("-001.000000", -1);
+		factoryFromString("1.000000000", 1);
+		factoryFromString("-1.00000000000", -1);
+		factoryFromString("0.1", 1, 10);
+		factoryFromString("0.01", 1, 100);
+		factoryFromString("0.001", 1, 1000);
+		factoryFromString("0.0001", 1, 10000);
+		factoryFromString("0.00001", 1, 100000);
+		factoryFromString("1/10", 1, 10);
+		factoryFromString("1/100", 1, 100);
+		factoryFromString("1/1000", 1, 1000);
+		factoryFromString("1/10000", 1, 10000);
+		factoryFromString("1/100000", 1, 100000);
+		factoryFromString("-0.1", -1, 10);
+		factoryFromString(".1", 1, 10);
+		factoryFromString("-.1", -1, 10);
+		factoryFromString("-0.01", -1, 100);
+		factoryFromString(".01", 1, 100);
+		factoryFromString("-.01", -1, 100);
+		factoryFromString("1.0", 1, 1);
+		factoryFromString("-1.0", -1, 1);
+		factoryFromString("1.1", 11, 10);
+		factoryFromString("-1.1", -11, 10);
+		factoryFromString("1.10", 11, 10);
+		factoryFromString("-1.10", -11, 10);
+		factoryFromString("01.10", 11, 10);
+		factoryFromString("-01.10", -11, 10);
+		factoryFromString("1.111", 1111, 1000);
+		factoryFromString("-1.111", -1111, 1000);
+		factoryFromString(".5", 1, 2);
+		factoryFromString("-.5", -1, 2);
+		factoryFromString("0.5", 1, 2);
+		factoryFromString("-0.5", -1, 2);
+		factoryFromString(".75", 3, 4);
+		factoryFromString("-.75", -3, 4);
+		factoryFromString("1.75", 7, 4);
+		factoryFromString("-1.75", -7, 4);
+		factoryFromString("0.001", 1, 1000);
+		factoryFromString("-0.001", -1, 1000);
+		factoryFromString("0.002", 1, 500);
+		factoryFromString("-0.002", -1, 500);
+		factoryFromString("0.004", 1, 250);
+		factoryFromString("-0.004", -1, 250);
+		factoryFromString("0.005", 1, 200);
+		factoryFromString("-0.005", -1, 200);
+		factoryFromString("0.010", 1, 100);
+		factoryFromString("-0.010", -1, 100);
+		factoryFromString("--1", 1);
+		factoryFromString("0+5", 5);
+		factoryFromString("1+1", 2);
+		factoryFromString("1-1", 0);
+		factoryFromString("1+5", 6);
+		factoryFromString("-1+5", 4);
+		factoryFromString("0+-5", -5);
+		factoryFromString("1+-5", -4);
+		factoryFromString("-1+-5", -6);
+		factoryFromString("0-5", -5);
+		factoryFromString("1-5", -4);
+		factoryFromString("-1-5", -6);
+		factoryFromString("0--5", 5);
+		factoryFromString("1--5", 6);
+		factoryFromString("-1--5", 4);
+		factoryFromString("-3+4+5-10--30+15-51", -10);
+		factoryFromString("0*1", 0);
+		factoryFromString("2*-3*4", -24);
+		factoryFromString("0/1", 0);
+		factoryFromString("3/1.5", 2);
+		factoryFromString("1.5/3", 1, 2);
+		factoryFromString("1.5/3.5", 3, 7);
+		factoryFromString("-1.5/3.5", -3, 7);
+		factoryFromString("1.5/-3.5", -3, 7);
+		factoryFromString("-1.5/-3.5", 3, 7);
+		factoryFromString("2/-3/4", 2, -12);
+		factoryFromString("-2/-3*4*5/6", 40, 18);
+		factoryFromString("100/30", 10, 3);
+		factoryFromString("1+2*3", 7);
+		factoryFromString("1*2+3", 5);
+		factoryFromString("1-2/3+4", 13, 3);
+		factoryFromString("1-2+3*4", 11);
+		factoryFromString("1*2-3/4", 5, 4);
+		factoryFromString("1*2/3+4", 14, 3);
+		factoryFromString("1^0", 1);
+		factoryFromString("2^0", 1);
+		factoryFromString("0^1", 0);
+		factoryFromString("0^-1", 0);
+		factoryFromString("0^43.1234", 0);
+		factoryFromString("0.000^-43.1234", 0);
+		factoryFromString("1^1", 1);
+		factoryFromString("1^2", 1);
+		factoryFromString("1^-1", 1);
+		factoryFromString("-1^1", -1);
+		factoryFromString("-1^-1", -1);
+		factoryFromString("3^2", 9);
+		factoryFromString("2^3", 8);
+		factoryFromString("-3^2", -9);
+		factoryFromString("-2^3", -8);
+		factoryFromString("3^-2", 1, 9);
+		factoryFromString("2^-3", 1, 8);
+		factoryFromString("-3^-2", -1, 9);
+		factoryFromString("-2^-3", -1, 8);
+		factoryFromString("4^3^2", 262144);
+		factoryFromString("2^2^3-2^-2/3^2+4+5^2-3*2^2*5", 8099, 36);
+		factoryFromString("(0+5)", 5);
+		factoryFromString("(2)-(1)", 1);
+		factoryFromString("(1+-1)+2^2", 4);
+		factoryFromString("2(3*4)", 24);
+		factoryFromString("(1)(2)3(4)5(((6)7)8)", 40320);
+		factoryFromString("1+(1)(2)3(4)5(((6)7)8)+1", 40322);
+		factoryFromString("(3*4)2", 24);
+		factoryFromString("(1+2)(3*4)", 36);
+		factoryFromString("(1+2)-(3*4)", -9);
+		factoryFromString("(1+2)5(3*4)", 180);
+		factoryFromString("(1+2)-5(3*4)", -57);
+		factoryFromString("(1+2)(1+2)(1+2)", 27);
+		factoryFromString("(2*-3*4)", -24);
+		factoryFromString("(3^2)", 9);
+		factoryFromString("(-3)^2", 9);
+		factoryFromString("2^2^3-(2^2)^3*(1+2)/(3/(4))", 0);
+		factoryFromString("(-1)", -1);
+		factoryFromString(".0-(1)", -1);
+		factoryFromString("-1*(1)", -1);
+		factoryFromString("-(1)", -1);
+		factoryFromString("-(-(1))", 1);
+		factoryFromString("-(-(-(1)))", -1);
+		factoryFromString("-(1+2)+3", 0);
+		factoryFromString("-(-(1+2)+3)+4", 4);
+		factoryFromString("-(-(-(1+2)+3)+4)+5", 1);
+		factoryFromString("0-(1+2)", -3);
+		factoryFromString("-1*(1+2)", -3);
+		factoryFromString("-(1+2)", -3);
+		factoryFromString("2^(0-(1))", 1, 2);
+		factoryFromString("2^(-1*(1))", 1, 2);
+		factoryFromString("2^(-(1))", 1, 2);
+		factoryFromString("2^0-(2)", -1);
+		factoryFromString("2^(.0-(2))", 1, 4);
+		factoryFromString("2^(-1*(2))", 1, 4);
+		factoryFromString("2^-(2)", 1, 4);
+		factoryFromString("(-1)^1", -1);
+		factoryFromString("(-1)^3", -1);
+		factoryFromString("(-1)^(1/3)", -1);
+		factoryFromString("(-1)^(2/3)", 1);
+		factoryFromString("(-1)^(3/3)", -1);
+		factoryFromString("(-1)^(4/3)", 1);
+		factoryFromString("(-1)^(5/3)", -1);
+		factoryFromString("(-32)^(1/5)", -2);
+		factoryFromString("(-32)^(2/5)", 4);
+		factoryFromString("(-32)^(3/5)", -8);
+		factoryFromString("(-32)^(4/5)", 16);
+		factoryFromString("(-32)^(5/5)", -32);
+		factoryFromString("(-1/8)^(1/3)", -1, 2);
+		factoryFromString("(-1/8)^(2/3)", 1, 4);
+		factoryFromString("(-1/8)^(3/3)", -1, 8);
+		factoryFromString("(-1/8)^(4/3)", 1, 16);
+		factoryFromString("(-1/8)^(5/3)", -1, 32);
+		factoryFromString("2^-2", 1, 4);
+		factoryFromString("2^-1*2", 1);
+		factoryFromString("2^0-2", -1);
+		factoryFromString("2^-(1/(2^-2))", 1, 16);
+		factoryFromString("2^-(1/-(2^-2))", 16);
+		factoryFromString("3^(-1+2)", 3);
+		factoryFromString("3^--2", 9);
+		factoryFromString("3^--2^3", 6561);
+		factoryFromString("-2^2", -4);
+		factoryFromString("4^(1/2)", 2);
+		factoryFromString("4^(-1/2)", 1, 2);
+		factoryFromString("(1/9)^(1/2)", 1, 3);
+		factoryFromString("(1/9)^(-1/2)", 3);
+		factoryFromString("(4/9)^(1/2)", 2, 3);
+		factoryFromString("(4/9)^(-1/2)", 3, 2);
+		factoryFromString("4^(3/2)", 8);
+		factoryFromString("4^(-3/-2)", 8);
+		factoryFromString("4^(-3/2)", 1, 8);
+		factoryFromString("4^(3/-2)", 1, 8);
+		factoryFromString("(4/9)^(3/2)", 8, 27);
+		factoryFromString("(4/9)^(-3/2)", 27, 8);
+		factoryFromString("(4/9)^(-30/2)", 205891132094649L, 1073741824);
+		factoryFromString("-4^(1/2)", -2);
+		factoryFromString("-4^(-1/2)", -1, 2);
+		factoryFromString("9^(1/2)", 3);
+		factoryFromString("25^(1/2)", 5);
+		factoryFromString("100^(1/2)", 10);
+		factoryFromString("961^(1/2)", 31);
+		factoryFromString("9801^(1/2)", 99);
+		factoryFromString("10000^(1/2)", 100);
+		factoryFromString("8^(1/3)", 2);
+		factoryFromString("27^(1/3)", 3);
+		factoryFromString("1000^(1/3)", 10);
+		factoryFromString("8000^(1/3)", 20);
+		factoryFromString("4.0^(0.50000)", 2);
+		factoryFromString("--4^(-.5)", 1, 2);
+		factoryFromString("(-2)^2", 4);
+		factoryFromString("-(2)^2", -4);
+		factoryFromString("-(2+1)^2", -9);
+		factoryFromString("-2^-2", -1, 4);
+		factoryFromString("2^-2^2", 1, 16);
+		factoryFromString("-2^-2^2", -1, 16);
+		factoryFromString("-2^-(2)^2", -1, 16);
+		factoryFromString("-2^(-2)^2", -16);
+		factoryFromString("-4^-2^-1", -1, 2);
+		factoryFromString("-2^-2(4^-2^-1)^2", -1, 16);
+		factoryFromString("-2.0^-2.0(4.0^-2.0^-1.0)^(2.2-.2)", -1, 16);
 	}
 
-	private void ofLong(long val, long... expectedResult)
+	private void factoryFromLong(long val, long... expectedResult)
 	{
-		of(Rat.of(val), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
+		factory(rat(val), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
 	}
 
-	private void ofLongs(long numerator, long denominator, long... expectedResult)
+	private void factoryFromLongs(long numerator, long denominator, long... expectedResult)
 	{
-		of(Rat.of(numerator, denominator), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
+		factory(rat(numerator, denominator), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
 	}
 
-	private void ofBigInteger(BigInteger val, long... expectedResult)
+	private void factoryFromBigInteger(BigInteger val, long... expectedResult)
 	{
-		of(Rat.of(val), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
+		factory(rat(val), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
 	}
 
-	private void ofBigIntegers(BigInteger numerator, BigInteger denominator, long... expectedResult)
+	private void factoryFromBigIntegers(BigInteger numerator, BigInteger denominator, long... expectedResult)
 	{
-		of(Rat.of(numerator, denominator), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
+		factory(rat(numerator, denominator), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
 	}
 
-	private void ofBigDecimal(BigDecimal val, long... expectedResult)
+	private void factoryFromBigDecimal(BigDecimal val, long... expectedResult)
 	{
-		of(Rat.of(val), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
+		factory(rat(val), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
 	}
 
-	private void ofDouble(double val, long... expectedResult)
+	private void factoryFromDouble(double val, long... expectedResult)
 	{
-		of(Rat.of(val), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
+		factory(rat(val), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
 	}
 
-	private void ofString(String expression, long... expectedResult)
+	private void factoryFromString(String expression, long... expectedResult)
 	{
-		of(Rat.of(expression), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
+		factory(rat(expression), expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : 1);
 	}
 
-	private void of(Rat result, long expectedNumerator, long expectedDenominator)
+	private void factory(Rat result, long expectedNumerator, long expectedDenominator)
 	{
-		Rat expectedResult = Rat.of(expectedNumerator, expectedDenominator);
+		Rat expectedResult = rat(expectedNumerator, expectedDenominator);
 		assertEquals(expectedResult, result);
 	}
 
@@ -426,7 +427,7 @@ public class RatTest
 
 	private void pow(long baseNumerator, long baseDenominator, long exponentNumerator, long exponentDenominator, long expectedResultNumerator, long expectedResultDenominator)
 	{
-		Rat result = Rat.of(baseNumerator, baseDenominator).pow(Rat.of(exponentNumerator, exponentDenominator));
+		Rat result = rat(baseNumerator, baseDenominator).pow(rat(exponentNumerator, exponentDenominator));
 		assertEquals(expectedResultNumerator, result.numerator().longValue());
 		assertEquals(expectedResultDenominator, result.denominator().longValue());
 	}
@@ -443,14 +444,14 @@ public class RatTest
 		nthRoot(27, 1);
 		nthRoot(27, 2);
 		nthRoot(27, 3);
-		assertEquals(Rat.of(-27), Rat.of(-27).nthRoot(Rat.of(1)));
-		assertEquals(Rat.of(-3), Rat.of(-27).nthRoot(Rat.of(3)));
+		assertEquals(rat(-27), rat(-27).nthRoot(rat(1)));
+		assertEquals(rat(-3), rat(-27).nthRoot(rat(3)));
 	}
 
 	private void nthRoot(int val, int n)
 	{
 		double expectedResult = Math.pow(val, 1.0 / n);
-		double actualResult = Rat.of(val).nthRoot(Rat.of(n)).toDouble();
+		double actualResult = rat(val).nthRoot(rat(n)).toDouble();
 		assertEquals(expectedResult, actualResult, DOUBLE_COMPARISON_TOLERANCE);
 	}
 
@@ -468,17 +469,17 @@ public class RatTest
 
 	private void sqrt(long n, long expectedSquareRoot)
 	{
-		assertEquals(Rat.of(expectedSquareRoot), Rat.of(n).sqrt());
+		assertEquals(rat(expectedSquareRoot), rat(n).sqrt());
 	}
 
 	private void sqrt(BigDecimal n, BigDecimal expectedSquareRoot)
 	{
-		assertEquals(Rat.of(expectedSquareRoot), Rat.of(n).sqrt());
+		assertEquals(rat(expectedSquareRoot), rat(n).sqrt());
 	}
 
 	private void sqrt(double n)
 	{
-		assertEquals(Math.sqrt(n), Rat.of(n).sqrt().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
+		assertEquals(Math.sqrt(n), rat(n).sqrt().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
@@ -492,7 +493,7 @@ public class RatTest
 	private void exp(int val)
 	{
 		double expectedResult = Math.exp(val);
-		double actualResult = Rat.of(val).exp().toDouble();
+		double actualResult = rat(val).exp().toDouble();
 		assertEquals(expectedResult, actualResult, DOUBLE_COMPARISON_TOLERANCE);
 	}
 
@@ -610,8 +611,8 @@ public class RatTest
 		log(5 * 5 * 5 * 5, 72 * 72 * 72 * 72, 72 * 72 * 72, 5 * 5 * 5, -3, 4);
 		log(5 * 5 * 5 * 5, 72 * 72 * 72 * 72, 5 * 5 * 5, 72 * 72 * 72, 3, 4);
 		log(BigInteger.valueOf(72).pow(4), BigInteger.ONE, BigInteger.valueOf(72).pow(6), BigInteger.ONE, BigInteger.valueOf(3), BigInteger.valueOf(2));
-		assertEquals(Rat.of(0), Rat.of(1).ln());
-		assertEquals(Rat.of(1), Rat.E.ln());
+		assertEquals(rat(0), rat(1).ln());
+		assertEquals(rat(1), Rat.E.ln());
 	}
 
 	private void log(long baseNumerator, long baseDenominator, long valNumerator, long valDenominator, long... expectedResult)
@@ -624,33 +625,33 @@ public class RatTest
 
 	private void log(BigInteger baseNumerator, BigInteger baseDenominator, BigInteger valNumerator, BigInteger valDenominator, BigInteger... expectedResult)
 	{
-		Rat expectedRat = Rat.of(expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : BigInteger.ONE);
-		Rat actualRat = Rat.of(valNumerator, valDenominator).log(Rat.of(baseNumerator, baseDenominator));
-		assertEquals(expectedRat, actualRat);
+		Rat expected = rat(expectedResult[0], expectedResult.length == 2 ? expectedResult[1] : BigInteger.ONE);
+		Rat actual = rat(valNumerator, valDenominator).log(rat(baseNumerator, baseDenominator));
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	public void ln()
 	{
-		assertEquals(Rat.of(0), Rat.of(1).ln());
-		assertEquals(Rat.of(1), Rat.E.ln());
+		assertEquals(rat(0), rat(1).ln());
+		assertEquals(rat(1), Rat.E.ln());
 		ln(2);
 		ln(123456890123456890.12345678901234567890);
 	}
 
 	private void ln(double n)
 	{
-		assertEquals(Math.log(n), Rat.of(n).ln().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
+		assertEquals(Math.log(n), rat(n).ln().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
 	public void utilities()
 	{
-		Rat neg = Rat.of(-1);
-		Rat zero = Rat.of(0);
-		Rat pos = Rat.of(1);
-		Rat negFraction = Rat.of(-5, 2);
-		Rat posFraction = Rat.of(5, 2);
+		Rat neg = rat(-1);
+		Rat zero = rat(0);
+		Rat pos = rat(1);
+		Rat negFraction = rat(-5, 2);
+		Rat posFraction = rat(5, 2);
 
 		assertFalse(neg.isPositive());
 		assertTrue(neg.isNegative());
@@ -682,47 +683,47 @@ public class RatTest
 		assertEquals(negFraction, posFraction.negate());
 		assertEquals(posFraction, posFraction.abs());
 
-		assertTrue(Rat.of(-1).isInteger());
-		assertTrue(Rat.of(0).isInteger());
-		assertTrue(Rat.of(1).isInteger());
-		assertTrue(Rat.of(-1, 1).isInteger());
-		assertTrue(Rat.of(0, 1).isInteger());
-		assertTrue(Rat.of(1, 1).isInteger());
-		assertTrue(Rat.of(-2, 2).isInteger());
-		assertTrue(Rat.of(0, 2).isInteger());
-		assertTrue(Rat.of(2, 2).isInteger());
+		assertTrue(rat(-1).isInteger());
+		assertTrue(rat(0).isInteger());
+		assertTrue(rat(1).isInteger());
+		assertTrue(rat(-1, 1).isInteger());
+		assertTrue(rat(0, 1).isInteger());
+		assertTrue(rat(1, 1).isInteger());
+		assertTrue(rat(-2, 2).isInteger());
+		assertTrue(rat(0, 2).isInteger());
+		assertTrue(rat(2, 2).isInteger());
 
-		assertFalse(Rat.of(-1, 2).isInteger());
-		assertFalse(Rat.of(1, 2).isInteger());
-		assertFalse(Rat.of(-2, 3).isInteger());
-		assertFalse(Rat.of(2, 3).isInteger());
-		assertFalse(Rat.of(-8, 12).isInteger());
-		assertFalse(Rat.of(8, 12).isInteger());
+		assertFalse(rat(-1, 2).isInteger());
+		assertFalse(rat(1, 2).isInteger());
+		assertFalse(rat(-2, 3).isInteger());
+		assertFalse(rat(2, 3).isInteger());
+		assertFalse(rat(-8, 12).isInteger());
+		assertFalse(rat(8, 12).isInteger());
 
-		assertEquals(Rat.of(-1).invert(), Rat.of(-1));
-		assertEquals(Rat.of(1).invert(), Rat.of(1));
-		assertEquals(Rat.of(-2).invert(), Rat.of(-1, 2));
-		assertEquals(Rat.of(2).invert(), Rat.of(1, 2));
-		assertEquals(Rat.of(-1, 2).invert(), Rat.of(-2));
-		assertEquals(Rat.of(1, 2).invert(), Rat.of(2));
-		assertEquals(Rat.of(-2, 3).invert(), Rat.of(-3, 2));
-		assertEquals(Rat.of(2, 3).invert(), Rat.of(3, 2));
-		assertEquals(Rat.of(-3, 2).invert(), Rat.of(-2, 3));
-		assertEquals(Rat.of(3, 2).invert(), Rat.of(2, 3));
+		assertEquals(rat(-1).invert(), rat(-1));
+		assertEquals(rat(1).invert(), rat(1));
+		assertEquals(rat(-2).invert(), rat(-1, 2));
+		assertEquals(rat(2).invert(), rat(1, 2));
+		assertEquals(rat(-1, 2).invert(), rat(-2));
+		assertEquals(rat(1, 2).invert(), rat(2));
+		assertEquals(rat(-2, 3).invert(), rat(-3, 2));
+		assertEquals(rat(2, 3).invert(), rat(3, 2));
+		assertEquals(rat(-3, 2).invert(), rat(-2, 3));
+		assertEquals(rat(3, 2).invert(), rat(2, 3));
 	}
 
 	@Test
 	public void comparison()
 	{
-		Rat a = Rat.of(0);
-		Rat b = Rat.of(1);
-		Rat c = Rat.of(-1);
-		Rat d = Rat.of(1, 2);
-		Rat e = Rat.of(-1, 2);
-		Rat f = Rat.of("0.5");
-		Rat g = Rat.of("-0.5");
-		Rat h = Rat.of(2, 5);
-		Rat i = Rat.of(-2, 5);
+		Rat a = rat(0);
+		Rat b = rat(1);
+		Rat c = rat(-1);
+		Rat d = rat(1, 2);
+		Rat e = rat(-1, 2);
+		Rat f = rat("0.5");
+		Rat g = rat("-0.5");
+		Rat h = rat(2, 5);
+		Rat i = rat(-2, 5);
 
 		assertEquals(true, a.equals(a));
 		assertEquals(true, d.equals(d));
@@ -877,7 +878,7 @@ public class RatTest
 
 	private void reducePrecision(long numerator, long denominator, int maxDigits, long expectedNumerator, long expectedDenominator)
 	{
-		Rat result = Rat.of(numerator, denominator).reducePrecision(maxDigits);
+		Rat result = rat(numerator, denominator).reducePrecision(maxDigits);
 		assertEquals(expectedNumerator, result.numerator().longValue());
 		assertEquals(expectedDenominator, result.denominator().longValue());
 	}

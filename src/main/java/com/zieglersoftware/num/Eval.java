@@ -4,6 +4,7 @@ import static com.zieglersoftware.assertions.Assertions.fals;
 import static com.zieglersoftware.assertions.Assertions.notEmpty;
 import static com.zieglersoftware.assertions.Assertions.notNull;
 import static com.zieglersoftware.assertions.Assertions.tru;
+import static com.zieglersoftware.num.Rat.rat;
 
 import java.math.BigInteger;
 
@@ -101,7 +102,7 @@ final class Eval
 		if (postDecimal == null)
 		{
 			BigInteger bigIntValue = new BigInteger(preDecimal.toString());
-			return Rat.of(bigIntValue);
+			return rat(bigIntValue);
 		}
 		else
 		{
@@ -111,7 +112,7 @@ final class Eval
 			for (int i = 1; i < postDecimal.length(); i++)
 				denominator = denominator.multiply(BigInteger.TEN);
 			BigInteger numerator = wholePart.multiply(denominator).add(decimalPart);
-			return Rat.of(numerator, denominator);
+			return rat(numerator, denominator);
 		}
 	}
 
@@ -199,7 +200,7 @@ final class Eval
 			Object nextTokenAfterNegatives = expression.tokenAt(finalNegativeAfterExponentIndex + 1);
 			if (!(nextTokenAfterNegatives instanceof Rat))
 				throw new IllegalArgumentException("Expected a number at index " + (finalNegativeAfterExponentIndex + 1) + ", but got " + nextTokenAfterNegatives + ". Expression: " + expression);
-			Rat power = apply((Rat) nextTokenAfterNegatives, Rat.of(factor), '*');
+			Rat power = apply((Rat) nextTokenAfterNegatives, rat(factor), '*');
 			Rat exponentResult = apply(base, power, '^');
 			Expression result = new Expression();
 			for (int i = 0; i < finalExponentIndex - 1; i++)
@@ -233,7 +234,7 @@ final class Eval
 					Object nextTokenAfterNegatives = expression.tokenAt(i);
 					if (!(nextTokenAfterNegatives instanceof Rat))
 						throw new IllegalArgumentException("Expected a number at index " + i + ", but got " + nextTokenAfterNegatives + ". Expression: " + expression);
-					result.addNumber(apply((Rat) nextTokenAfterNegatives, Rat.of(factor), '*'));
+					result.addNumber(apply((Rat) nextTokenAfterNegatives, rat(factor), '*'));
 				}
 				else
 					throw new IllegalArgumentException("Expected a number or '-' at index " + i + ", but got " + token + ". Expression: " + expression);

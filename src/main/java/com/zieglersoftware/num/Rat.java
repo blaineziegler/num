@@ -25,13 +25,15 @@ import com.zieglersoftware.assertions.Assertions;
  * exactly, but if a numerator or denominator approaches the magnitude
  * {@code 2}<sup>{@code Integer.MAX_VALUE}</sup>, overflow may occur.
  * <p>
- * {@link #toString()} prints the fraction in lowest terms, even if the numerator
- * and denominator used to construct the {@code Rat} were not already reduced.
+ * {@link #toString()} always prints the fraction in lowest terms.
  * <p>
- * Instances of {@code Rat} are acquired by various overloads of the static
- * {@code of()} method. The string overload takes an arbitrary arithmetic expression
- * as its argument, evaluates it, and returns the result as a {@code Rat}. The static
- * instances {@code ZERO}, {@code ONE}, {@code PI}, and {@code E} are also provided.
+ * Instances of {@code Rat} are acquired from the static {@code rat()} methods.
+ * It is recommended to statically import {@code rat()} for convenience. There
+ * are many overloads of {@code rat()} for acquiring {@code Rat} from different
+ * kinds of inputs. The string overload takes an arbitrary arithmetic expression
+ * as its argument, evaluates it, and returns the result as a {@code Rat}. The
+ * static instances {@code ZERO}, {@code ONE}, {@code PI}, and {@code E} are also
+ * available.
  * <p>
  * Comparison methods {@code equal}, {@code notEqual}, {@code greater}, {@code less},
  * {@code greaterOrEqual}, {@code lessOrEqual}, {@code isPositive}, {@code isNegative},
@@ -42,8 +44,8 @@ import com.zieglersoftware.assertions.Assertions;
  * {@code pow}, {@code exp}, {@code log}, and {@code ln}.
  * <p>
  * Whenever possible, these arithmetic methods return an exact result; for example,
- * {@code Rat.of(-8,27).pow(Rat.of(-2,3)) => 9/4}, and
- * {@code Rat.of(9,4).log(Rat.of(8,27)) => -2/3}. If the result is irrational, a very
+ * {@code rat(-8,27).pow(rat(-2,3)) => 9/4}, and
+ * {@code rat(9,4).log(rat(8,27)) => -2/3}. If the result is irrational, a very
  * high-precision approximation is returned (at least 100 significant figures in the
  * decimal representation).
  * <p>
@@ -98,22 +100,22 @@ public final class Rat implements Comparable<Rat>
 	/**
 	 * Zero
 	 */
-	public static final Rat ZERO = of(0);
+	public static final Rat ZERO = rat(0);
 
 	/**
 	 * One
 	 */
-	public static final Rat ONE = of(1);
+	public static final Rat ONE = rat(1);
 
 	/**
 	 * A {@code Rat} representation of {@code pi} approximated to 100 decimal places
 	 */
-	public static final Rat PI = of("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170680");
+	public static final Rat PI = rat("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170680");
 
 	/**
 	 * A {@code Rat} representation of {@code e} approximated to 100 decimal places
 	 */
-	public static final Rat E = of("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
+	public static final Rat E = rat("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
 
 	private static Rat ofReduced(BigInteger reducedNumerator, BigInteger reducedDenominator)
 	{
@@ -130,7 +132,7 @@ public final class Rat implements Comparable<Rat>
 	 * <p>
 	 * {@code denominator} cannot be zero.
 	 */
-	public static Rat of(BigInteger numerator, BigInteger denominator)
+	public static Rat rat(BigInteger numerator, BigInteger denominator)
 	{
 		notNull(numerator, "numerator");
 		notNull(denominator, "denominator");
@@ -158,15 +160,15 @@ public final class Rat implements Comparable<Rat>
 		}
 	}
 
-	private static Rat of(BigInteger[] ratio)
+	private static Rat rat(BigInteger[] ratio)
 	{
-		return of(ratio[0], ratio[1]);
+		return rat(ratio[0], ratio[1]);
 	}
 
 	/**
 	 * Returns a {@code Rat} equal to {@code value/1}.
 	 */
-	public static Rat of(BigInteger value)
+	public static Rat rat(BigInteger value)
 	{
 		notNull(value, "value");
 		if (!BigUtil.isNeg(value) && BigUtil.less(value, WHOLE_CACHE_SIZE))
@@ -180,9 +182,9 @@ public final class Rat implements Comparable<Rat>
 	/**
 	 * Returns a {@code Rat} equal to {@code value/1}.
 	 */
-	public static Rat of(long value)
+	public static Rat rat(long value)
 	{
-		return of(bi(value));
+		return rat(bi(value));
 	}
 
 	/**
@@ -190,28 +192,28 @@ public final class Rat implements Comparable<Rat>
 	 * <p>
 	 * {@code denominator} cannot be zero.
 	 */
-	public static Rat of(long numerator, long denominator)
+	public static Rat rat(long numerator, long denominator)
 	{
-		return of(bi(numerator), bi(denominator));
+		return rat(bi(numerator), bi(denominator));
 	}
 
 	/**
 	 * Returns a {@code Rat} equal to the given value.
 	 */
-	public static Rat of(BigDecimal value)
+	public static Rat rat(BigDecimal value)
 	{
 		notNull(value, "value");
-		return of(fraction(value));
+		return rat(fraction(value));
 	}
 
 	/**
 	 * Returns a {@code Rat} equal to the given value.
 	 */
-	public static Rat of(double value)
+	public static Rat rat(double value)
 	{
 		fals(Double.isNaN(value), "Cannot be NaN");
 		fals(Double.isInfinite(value), "Cannot be infinite");
-		return of(fraction(bd(value)));
+		return rat(fraction(bd(value)));
 	}
 
 	/**
@@ -220,7 +222,7 @@ public final class Rat implements Comparable<Rat>
 	 * whitespace, digits, decimal points, parenthesis, and the operators
 	 * {@code + - * / ^}.
 	 */
-	public static Rat of(String expression)
+	public static Rat rat(String expression)
 	{
 		return Eval.eval(expression);
 	}
@@ -293,7 +295,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat plus(Rat other)
 	{
-		return of(Operations.add(this.numerator, this.denominator, other.numerator, other.denominator));
+		return rat(Operations.add(this.numerator, this.denominator, other.numerator, other.denominator));
 	}
 
 	/**
@@ -301,7 +303,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat minus(Rat other)
 	{
-		return of(Operations.subtract(this.numerator, this.denominator, other.numerator, other.denominator));
+		return rat(Operations.subtract(this.numerator, this.denominator, other.numerator, other.denominator));
 	}
 
 	/**
@@ -309,7 +311,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat times(Rat other)
 	{
-		return of(Operations.multiply(this.numerator, this.denominator, other.numerator, other.denominator));
+		return rat(Operations.multiply(this.numerator, this.denominator, other.numerator, other.denominator));
 	}
 
 	/**
@@ -319,7 +321,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat dividedBy(Rat other)
 	{
-		return of(Operations.divide(this.numerator, this.denominator, other.numerator, other.denominator));
+		return rat(Operations.divide(this.numerator, this.denominator, other.numerator, other.denominator));
 	}
 
 	/**
@@ -330,7 +332,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat pow(Rat exponent)
 	{
-		return of(Operations.pow(this.numerator, this.denominator, exponent.numerator, exponent.denominator));
+		return rat(Operations.pow(this.numerator, this.denominator, exponent.numerator, exponent.denominator));
 	}
 
 	/**
@@ -340,7 +342,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat nthRoot(Rat n)
 	{
-		return of(Operations.nthRoot(this.numerator, this.denominator, n.numerator, n.denominator));
+		return rat(Operations.nthRoot(this.numerator, this.denominator, n.numerator, n.denominator));
 	}
 
 	/**
@@ -350,7 +352,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat sqrt()
 	{
-		return of(Operations.sqrt(numerator, denominator));
+		return rat(Operations.sqrt(numerator, denominator));
 	}
 
 	/**
@@ -358,7 +360,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat exp()
 	{
-		return of(Operations.exp(numerator, denominator));
+		return rat(Operations.exp(numerator, denominator));
 	}
 
 	/**
@@ -368,7 +370,7 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat log(Rat base)
 	{
-		return of(Operations.log(base.numerator, base.denominator, this.numerator, this.denominator));
+		return rat(Operations.log(base.numerator, base.denominator, this.numerator, this.denominator));
 	}
 
 	/**
@@ -378,14 +380,14 @@ public final class Rat implements Comparable<Rat>
 	 */
 	public Rat ln()
 	{
-		return of(Operations.ln(numerator, denominator));
+		return rat(Operations.ln(numerator, denominator));
 	}
 
 	/**
 	 * Returns true if {@code this} is numerically equal to {@code other}.
 	 * <p>
 	 * The comparison is about numeric equivalence, so, for example,
-	 * {@code Rat.of(1,2).equal(Rat.of(2,4)) => true}.
+	 * {@code rat(1,2).equal(rat(2,4)) => true}.
 	 * <p>
 	 * This method is equivalent to {@link #equals(Object)} in the case
 	 * that the given object is a non-null {@code Rat}.
@@ -399,7 +401,7 @@ public final class Rat implements Comparable<Rat>
 	 * Returns true if {@code this} is not numerically equal to {@code other}.
 	 * <p>
 	 * The comparison is about numeric equivalence, so, for example,
-	 * {@code Rat.of(1,2).notEqual(Rat.of(2,4)) => false}.
+	 * {@code rat(1,2).notEqual(rat(2,4)) => false}.
 	 */
 	public boolean notEqual(Rat other)
 	{
@@ -510,7 +512,7 @@ public final class Rat implements Comparable<Rat>
 		BigInteger divisor = bi(10).pow(leastDigits - maxDigits);
 		BigInteger newNumerator = round(divide(numerator, divisor));
 		BigInteger newDenominator = round(divide(denominator, divisor));
-		return of(newNumerator, newDenominator);
+		return rat(newNumerator, newDenominator);
 	}
 
 	/**
