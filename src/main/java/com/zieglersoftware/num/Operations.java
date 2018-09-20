@@ -4,7 +4,6 @@ import static com.zieglersoftware.assertions.Assertions.fals;
 import static com.zieglersoftware.assertions.Assertions.greater;
 import static com.zieglersoftware.assertions.Assertions.notEqual;
 import static com.zieglersoftware.assertions.Assertions.tru;
-import static com.zieglersoftware.num.BigUtil.BI0;
 import static com.zieglersoftware.num.BigUtil.BI1;
 import static com.zieglersoftware.num.BigUtil.bi;
 import static com.zieglersoftware.num.BigUtil.equal;
@@ -134,13 +133,13 @@ final class Operations
 	/**
 	 * Returns a numerator and denominator of the result, not necessarily reduced.
 	 * <p>
-	 * {@code nNumerator} must be greater than 0.
-	 * If {@code valNumerator} is negative, {@code nNumerator} must be odd.
+	 * {@code n} must be greater than 0.
+	 * If {@code valNumerator} is negative, {@code n} must be odd.
 	 */
-	public static BigInteger[] nthRoot(BigInteger valNumerator, BigInteger valDenominator, BigInteger nNumerator, BigInteger nDenominator)
+	public static BigInteger[] nthRoot(BigInteger valNumerator, BigInteger valDenominator, long n)
 	{
-		greater(nNumerator, BI0, "nNumerator");
-		return pow(valNumerator, valDenominator, nDenominator, nNumerator);
+		greater(n, 0, "n");
+		return pow(valNumerator, valDenominator, BI1, bi(n));
 	}
 
 	/**

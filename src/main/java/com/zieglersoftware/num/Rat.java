@@ -345,9 +345,9 @@ public final class Rat implements Comparable<Rat>
 	 * <p>
 	 * {@code n} must be greater than zero. If {@code this} is negative, {@code n} must be odd.
 	 */
-	public Rat nthRoot(Rat n)
+	public Rat nthRoot(long n)
 	{
-		return rat(Operations.nthRoot(this.numerator, this.denominator, n.numerator, n.denominator));
+		return rat(Operations.nthRoot(this.numerator, this.denominator, n));
 	}
 
 	/**

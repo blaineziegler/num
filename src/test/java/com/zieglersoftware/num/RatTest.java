@@ -444,14 +444,14 @@ public class RatTest
 		nthRoot(27, 1);
 		nthRoot(27, 2);
 		nthRoot(27, 3);
-		assertEquals(rat(-27), rat(-27).nthRoot(rat(1)));
-		assertEquals(rat(-3), rat(-27).nthRoot(rat(3)));
+		assertEquals(rat(-27), rat(-27).nthRoot(1));
+		assertEquals(rat(-3), rat(-27).nthRoot(3));
 	}
 
 	private void nthRoot(int val, int n)
 	{
 		double expectedResult = Math.pow(val, 1.0 / n);
-		double actualResult = rat(val).nthRoot(rat(n)).toDouble();
+		double actualResult = rat(val).nthRoot(n).toDouble();
 		assertEquals(expectedResult, actualResult, DOUBLE_COMPARISON_TOLERANCE);
 	}
 
@@ -465,6 +465,7 @@ public class RatTest
 		sqrt(BigDecimal.valueOf(1234.5678).multiply(BigDecimal.valueOf(1234.5678)), BigDecimal.valueOf(1234.5678));
 		sqrt(10);
 		sqrt(123456890123456890.12345678901234567890);
+		sqrt(4, 9, 2, 3);
 	}
 
 	private void sqrt(long n, long expectedSquareRoot)
@@ -480,6 +481,13 @@ public class RatTest
 	private void sqrt(double n)
 	{
 		assertEquals(Math.sqrt(n), rat(n).sqrt().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
+	}
+
+	private void sqrt(long numerator, long denominator, long expectedResultNumerator, long expectedResultDenominator)
+	{
+		Rat result = rat(numerator, denominator).sqrt();
+		assertEquals(expectedResultNumerator, result.numerator().longValue());
+		assertEquals(expectedResultDenominator, result.denominator().longValue());
 	}
 
 	@Test
