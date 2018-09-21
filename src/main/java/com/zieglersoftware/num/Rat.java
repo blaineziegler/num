@@ -56,7 +56,7 @@ import com.zieglersoftware.assertions.Assertions;
  * or denominator approaches the magnitude {@code 2}<sup>{@code Integer.MAX_VALUE}</sup>,
  * overflow may occur.
  */
-public final class Rat implements Comparable<Rat>
+public final class Rat extends Number implements Comparable<Rat>
 {
 	private final BigInteger numerator;
 	private final BigInteger denominator;
@@ -523,7 +523,7 @@ public final class Rat implements Comparable<Rat>
 	/**
 	 * Returns a {@code BigDecimal} representation of {@code this}.
 	 */
-	public BigDecimal toBigDecimal()
+	public BigDecimal bigDecimalValue()
 	{
 		return BigUtil.divide(numerator, denominator);
 	}
@@ -533,12 +533,51 @@ public final class Rat implements Comparable<Rat>
 	 * because {@code double} has limited precision. If the magnitude of {@code this}
 	 * is too large to be represented as a {@code double}, an exception is thrown.
 	 */
-	public double toDouble()
+	@Override
+	public double doubleValue()
 	{
-		BigDecimal bigDecimalValue = toBigDecimal();
+		BigDecimal bigDecimalValue = bigDecimalValue();
 		double doubleValue = bigDecimalValue.doubleValue();
-		fals(Double.isInfinite(doubleValue), "The magnitude of this value %s is too large to represent as a double", (numerator + "/" + denominator));
+		fals(Double.isInfinite(doubleValue), "The magnitude of this value %s is too large to represent as a double", this);
 		return doubleValue;
+	}
+
+	/**
+	 * Returns a {@code float} representation of {@code this}. Precision may be lost
+	 * because {@code float} has limited precision. If the magnitude of {@code this}
+	 * is too large to be represented as a {@code float}, an exception is thrown.
+	 */
+	@Override
+	public float floatValue()
+	{
+		BigDecimal bigDecimalValue = bigDecimalValue();
+		float floatValue = bigDecimalValue.floatValue();
+		fals(Float.isInfinite(floatValue), "The magnitude of this value %s is too large to represent as a float", this);
+		return floatValue;
+	}
+
+	/**
+	 * Returns a {@code long} representation of {@code this}, if possible.
+	 * If {@code this} cannot be exactly represented as a {@code long}, an
+	 * exception is thrown.
+	 */
+	@Override
+	public long longValue()
+	{
+		BigDecimal bigDecimalValue = bigDecimalValue();
+		return bigDecimalValue.longValueExact();
+	}
+
+	/**
+	 * Returns an {@code int} representation of {@code this}, if possible.
+	 * If {@code this} cannot be exactly represented as an {@code int}, an
+	 * exception is thrown.
+	 */
+	@Override
+	public int intValue()
+	{
+		BigDecimal bigDecimalValue = bigDecimalValue();
+		return bigDecimalValue.intValueExact();
 	}
 
 	/**
@@ -579,4 +618,6 @@ public final class Rat implements Comparable<Rat>
 		else
 			return numerator + "/" + denominator;
 	}
+
+	private static final long serialVersionUID = 1L;
 }

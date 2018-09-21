@@ -19,8 +19,8 @@ public class RatTest
 	@Test
 	public void constants()
 	{
-		assertEquals(Math.PI, Rat.PI.toDouble(), DOUBLE_COMPARISON_TOLERANCE);
-		assertEquals(Math.E, Rat.E.toDouble(), DOUBLE_COMPARISON_TOLERANCE);
+		assertEquals(Math.PI, Rat.PI.doubleValue(), DOUBLE_COMPARISON_TOLERANCE);
+		assertEquals(Math.E, Rat.E.doubleValue(), DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
@@ -451,7 +451,7 @@ public class RatTest
 	private void nthRoot(int val, int n)
 	{
 		double expectedResult = Math.pow(val, 1.0 / n);
-		double actualResult = rat(val).nthRoot(n).toDouble();
+		double actualResult = rat(val).nthRoot(n).doubleValue();
 		assertEquals(expectedResult, actualResult, DOUBLE_COMPARISON_TOLERANCE);
 	}
 
@@ -480,7 +480,7 @@ public class RatTest
 
 	private void sqrt(double n)
 	{
-		assertEquals(Math.sqrt(n), rat(n).sqrt().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
+		assertEquals(Math.sqrt(n), rat(n).sqrt().doubleValue(), DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	private void sqrt(long numerator, long denominator, long expectedResultNumerator, long expectedResultDenominator)
@@ -501,7 +501,7 @@ public class RatTest
 	private void exp(int val)
 	{
 		double expectedResult = Math.exp(val);
-		double actualResult = rat(val).exp().toDouble();
+		double actualResult = rat(val).exp().doubleValue();
 		assertEquals(expectedResult, actualResult, DOUBLE_COMPARISON_TOLERANCE);
 	}
 
@@ -649,7 +649,7 @@ public class RatTest
 
 	private void ln(double n)
 	{
-		assertEquals(Math.log(n), rat(n).ln().toDouble(), DOUBLE_COMPARISON_TOLERANCE);
+		assertEquals(Math.log(n), rat(n).ln().doubleValue(), DOUBLE_COMPARISON_TOLERANCE);
 	}
 
 	@Test
