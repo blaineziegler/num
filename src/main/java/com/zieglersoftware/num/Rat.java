@@ -20,10 +20,9 @@ import com.zieglersoftware.assertions.Assertions;
 
 /**
  * Immutable class that represents a rational number; i.e., a number that can be
- * expressed exactly as the ratio of two integers (including whole numbers, with
- * a denomiator of one). The fraction will always be viewed in lowest terms when
- * calling methods such as {@link #toString()}, {@link #numerator()}, and
- * {@link #denominator()}.
+ * expressed exactly as the ratio of two integers (including whole numbers).
+ * The fraction will always be viewed in lowest terms when calling methods such as
+ * {@link #toString()}, {@link #numerator()}, and {@link #denominator()}.
  * <p>
  * Instances of {@code Rat} are acquired from the static {@code rat()} methods.
  * It is recommended to statically import {@code rat()} for convenience. There
