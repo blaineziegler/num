@@ -62,6 +62,11 @@ import java.util.List;
  */
 public final class BigUtil
 {
+	// Only static methods; don't instantiate
+	private BigUtil()
+	{
+	}
+
 	/**
 	 * The {@code BigDecimal} 0, with no decimal digits
 	 */

@@ -14,6 +14,7 @@ import java.math.BigInteger;
  */
 final class Eval
 {
+	// Only static methods; don't instantiate
 	private Eval()
 	{
 	}

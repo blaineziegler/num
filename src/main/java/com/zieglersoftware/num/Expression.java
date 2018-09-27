@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A list of tokens, each of which is either a {@code TNumber} or a character (, ), +, -, *, /, or ^.
+ * A list of tokens, each of which is either a {@link Rat} or a character (, ), +, -, *, /, or ^.
  *
  * Package-private helper class for {@link Eval}
  */
@@ -42,7 +42,7 @@ final class Expression
 		else if (token instanceof Rat)
 			return addNumber((Rat) token);
 		else
-			throw new IllegalArgumentException("Token must be of type char or TNumber. Was " + token.getClass().getSimpleName());
+			throw new IllegalArgumentException("Token must be of type char or Rat. Was " + token.getClass().getSimpleName());
 	}
 
 	public Expression addSymbol(char c)
@@ -69,7 +69,7 @@ final class Expression
 		else if (token instanceof Rat)
 			return insertNumber(index, (Rat) token);
 		else
-			throw new IllegalArgumentException("Token must be of type char or TNumber. Was " + token.getClass().getSimpleName());
+			throw new IllegalArgumentException("Token must be of type char or Rat. Was " + token.getClass().getSimpleName());
 	}
 
 	public Expression insertSymbol(int index, char c)
@@ -98,7 +98,7 @@ final class Expression
 		else if (token instanceof Rat)
 			return setNumber(index, (Rat) token);
 		else
-			throw new IllegalArgumentException("Token must be of type char or TNumber. Was " + token.getClass().getSimpleName());
+			throw new IllegalArgumentException("Token must be of type char or Rat. Was " + token.getClass().getSimpleName());
 	}
 
 	public Expression setSymbol(int index, char c)
@@ -154,7 +154,7 @@ final class Expression
 	public Rat numberAt(int index)
 	{
 		Object o = tokenAt(index);
-		tru((o instanceof Rat), "Element at index %d was expected to be a TNumber, but was %s %s instead", index, o.getClass().getSimpleName(), o);
+		tru((o instanceof Rat), "Element at index %d was expected to be a Rat, but was %s %s instead", index, o.getClass().getSimpleName(), o);
 		return (Rat) tokens.get(index);
 	}
 
