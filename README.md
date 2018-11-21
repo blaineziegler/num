@@ -13,7 +13,7 @@ Comparisons are simplified. Rather than use the clumsy `a.compareTo(b) <op> 0` i
 
 BigUtil offers calculation capabilities that are not available natively. BigDecimal and BigInteger do not offer `sqrt` or `log` methods, and their `pow` methods cannot take decimal values as the exponent. All these calculations are available with BigUtil.
 
-Additionally, many arithmetic and utility methods offer improved convenience over what is provided natively. As stated earlier, many methods allow mixing and matching of BigDecimal and BigInteger types. Division automatically rounds to an extremely high precision if necessary, and otherwise returns the exact result without irritating scale. The `round` method, unlike `BigDecimal.round()`, rounds to the given number of decimal places, and unlike `BigDecimal.setScale()`, it doesn't require you to think about trailing zeros and BigDecimal's `scale` concept, which might have been better left as an implementation detail. Many other helpful methods are provided as well. See the BigUtil [Javadoc](https://blaineziegler.github.io/num/com/zieglersoftware/num/BigUtil.html "BigUtil") for details.
+Additionally, many arithmetic and utility methods offer improved convenience over what is provided natively. As stated earlier, many methods allow mixing and matching of BigDecimal and BigInteger types. Division automatically rounds to an extremely high precision if necessary, and otherwise returns the exact result without irritating scale. The `round` method, unlike `BigDecimal.round()`, rounds to the given number of decimal places, and unlike `BigDecimal.setScale()`, it doesn't require you to think about trailing zeros and BigDecimal's `scale` concept, which might have been better left as an implementation detail. Many other helpful methods are provided as well. See the BigUtil [Javadoc](https://blaineziegler.github.io/num/javadoc/com/zieglersoftware/num/BigUtil.html "BigUtil") for details.
 
 # Rat
 
@@ -32,4 +32,4 @@ Arithmetic methods are provided, including calculations such as `log`, `nthRoot`
 - `rat(16,81).pow(rat(-0.75))` returns `27/8`
 - `rat(8,125).log(rat(25,4))` returns `-3/2` &nbsp;&nbsp; *(Read as the log of 8/125 with base 25/4)*
 
-For more details, see the Rat [Javadoc](https://blaineziegler.github.io/num/com/zieglersoftware/num/Rat.html "Rat").
+For more details, see the Rat [Javadoc](https://blaineziegler.github.io/num/javadoc/com/zieglersoftware/num/Rat.html "Rat").
