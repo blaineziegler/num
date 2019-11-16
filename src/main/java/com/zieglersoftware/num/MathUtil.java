@@ -12,6 +12,10 @@ import java.util.Map;
  */
 final class MathUtil
 {
+	// Only static methods; don't instantiate
+	private MathUtil()
+	{}
+
 	public static long gcd(long a, long b)
 	{
 		if (b == 0)

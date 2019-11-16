@@ -16,8 +16,7 @@ final class Eval
 {
 	// Only static methods; don't instantiate
 	private Eval()
-	{
-	}
+	{}
 
 	/**
 	 * Evaluates the given expression and returns the result as a {@code Rat}.

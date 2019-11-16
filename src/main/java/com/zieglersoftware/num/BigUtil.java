@@ -64,8 +64,7 @@ public final class BigUtil
 {
 	// Only static methods; don't instantiate
 	private BigUtil()
-	{
-	}
+	{}
 
 	/**
 	 * The {@code BigDecimal} 0, with no decimal digits
@@ -613,11 +612,10 @@ public final class BigUtil
 	}
 
 	/**
-	 * Returns a 2-element array of {@code BigIntegers}, consisting of:
-	 * <ol>
-	 * <li>{@link #wholePart(BigDecimal)}</li>
-	 * <li>{@link #decimalPart(BigDecimal)}, but scaled as an integer</li>
-	 * </ol>
+	 * Returns a 2-element array of {@code BigIntegers} that represents the whole part and the decimal part of {@code val}.
+	 * <p>
+	 * The first element of the array is equivalent to {@link #wholePart(BigDecimal)}.
+	 * The second element is equivalent to {@link #decimalPart(BigDecimal)}, but scaled as an integer.
 	 * <p>
 	 * Examples:
 	 * 
@@ -1268,7 +1266,7 @@ public final class BigUtil
 	}
 
 	/**
-	 * Returns {@code e^power}
+	 * Returns {@code e^power}.
 	 * <p>
 	 * {@code abs(power)} must be less or equal to 4,900,000,000.
 	 */
@@ -1278,7 +1276,7 @@ public final class BigUtil
 	}
 
 	/**
-	 * Returns {@code e^power}
+	 * Returns {@code e^power}.
 	 * <p>
 	 * {@code abs(power)} must be less or equal to 4,900,000,000.
 	 */
@@ -1288,7 +1286,7 @@ public final class BigUtil
 	}
 
 	/**
-	 * Returns {@code e^power}
+	 * Returns {@code e^power}.
 	 * <p>
 	 * {@code abs(power)} must be less or equal to 4,900,000,000.
 	 */
@@ -1300,6 +1298,8 @@ public final class BigUtil
 	}
 
 	/**
+	 * Returns the natural logarithm of {@code val}.
+	 * <p>
 	 * {@code val} must be greater than 0.
 	 */
 	public static BigDecimal ln(long val)
@@ -1308,6 +1308,8 @@ public final class BigUtil
 	}
 
 	/**
+	 * Returns the natural logarithm of {@code val}.
+	 * <p>
 	 * {@code val} must be greater than 0. More specifically, {@code val}
 	 * must be greater than 10^-10,000,000 and less than 10^10,000,000.
 	 */
@@ -1317,6 +1319,8 @@ public final class BigUtil
 	}
 
 	/**
+	 * Returns the natural logarithm of {@code val}.
+	 * <p>
 	 * {@code val} must be greater than 0. More specifically, {@code val}
 	 * must be greater than 10^-10,000,000 and less than 10^10,000,000.
 	 */
@@ -1596,7 +1600,7 @@ public final class BigUtil
 	// Uses the Taylor series f(power) = e^power = sum(i=0->inf, power^i / i!),
 	// taken two terms at a time. The series is centered at power=0, so low-degree
 	// approximations of the series are more accurate when power is close to 0.
-	// Recast the given power as a number closer to zero with the observation that 
+	// Recast the given power as a number closer to zero with the observation that
 	// e ^ a.b = e^a * e^0.b = e^a * (e^(0.b/d))^d
 	private static BigDecimal expInternal(BigDecimal power)
 	{

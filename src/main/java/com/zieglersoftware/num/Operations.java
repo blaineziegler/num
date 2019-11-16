@@ -27,9 +27,9 @@ import java.util.Optional;
  */
 final class Operations
 {
+	// Only static methods; don't instantiate
 	private Operations()
-	{
-	}
+	{}
 
 	private static final BigInteger[] ZERO = new BigInteger[] { BigInteger.ZERO, BigInteger.ONE };
 	private static final BigInteger[] ONE = new BigInteger[] { BigInteger.ONE, BigInteger.ONE };
@@ -51,8 +51,8 @@ final class Operations
 	public static BigInteger[] add(BigInteger aNumerator, BigInteger aDenominator, BigInteger bNumerator, BigInteger bDenominator)
 	{
 		return new BigInteger[] {
-				aNumerator.multiply(bDenominator).add(bNumerator.multiply(aDenominator)),
-				aDenominator.multiply(bDenominator)
+			aNumerator.multiply(bDenominator).add(bNumerator.multiply(aDenominator)),
+			aDenominator.multiply(bDenominator)
 		};
 	}
 
@@ -62,8 +62,8 @@ final class Operations
 	public static BigInteger[] subtract(BigInteger aNumerator, BigInteger aDenominator, BigInteger bNumerator, BigInteger bDenominator)
 	{
 		return new BigInteger[] {
-				aNumerator.multiply(bDenominator).subtract(bNumerator.multiply(aDenominator)),
-				aDenominator.multiply(bDenominator)
+			aNumerator.multiply(bDenominator).subtract(bNumerator.multiply(aDenominator)),
+			aDenominator.multiply(bDenominator)
 		};
 	}
 
@@ -73,8 +73,8 @@ final class Operations
 	public static BigInteger[] multiply(BigInteger aNumerator, BigInteger aDenominator, BigInteger bNumerator, BigInteger bDenominator)
 	{
 		return new BigInteger[] {
-				aNumerator.multiply(bNumerator),
-				aDenominator.multiply(bDenominator)
+			aNumerator.multiply(bNumerator),
+			aDenominator.multiply(bDenominator)
 		};
 	}
 
@@ -87,8 +87,8 @@ final class Operations
 	{
 		notEqual(bNumerator, BigInteger.ZERO, "bNumerator");
 		return new BigInteger[] {
-				aNumerator.multiply(bDenominator),
-				aDenominator.multiply(bNumerator)
+			aNumerator.multiply(bDenominator),
+			aDenominator.multiply(bNumerator)
 		};
 	}
 
