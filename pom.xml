@@ -35,7 +35,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.2.0</version>
 				<configuration>
 					<outputDirectory>docs/javadoc</outputDirectory>
 					<doclint>none</doclint>
@@ -44,6 +44,7 @@
 					<nodeprecatedlist>true</nodeprecatedlist>
 					<nohelp>true</nohelp>
 					<notree>true</notree>
+					<source>8</source>
 				</configuration>
 				<executions>
 					<execution>
