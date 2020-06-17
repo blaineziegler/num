@@ -38,8 +38,8 @@ import com.zieglersoftware.assertions.Assertions;
  * Whenever possible, these arithmetic methods return an exact result; for example,
  * 
  * <pre>
- * {@code rat(-8,27).pow(rat(-2,3)) ->  9/4}
- * {@code rat(9,4).log(rat(8,27))   -> -2/3}
+ * {@code rat(-8,27).pow(rat(-2,3)) →  9/4}
+ * {@code rat(9,4).log(rat(8,27))   → -2/3}
  * </pre>
  * 
  * If the result is irrational, a very high-precision approximation is returned
@@ -499,13 +499,13 @@ public final class Rat extends Number implements Comparable<Rat>
 	 * Examples:
 	 * 
 	 * <pre>
-	 * 1234/2345, 3 ->  123/235 
-	 * 1234/2345, 4 -> 1234/2345 
-	 * 1234/2345, 5 -> 1234/2345
-	 *  123/4567, 2 ->   12/457
-	 *  123/4561, 2 ->    1/38 (12/456 reduced)
-	 *  123/4567, 3 ->  123/4567
-	 *  123/4567, 4 ->  123/4567
+	 * 1234/2345, 3 →  123/235 
+	 * 1234/2345, 4 → 1234/2345 
+	 * 1234/2345, 5 → 1234/2345
+	 *  123/4567, 2 →   12/457
+	 *  123/4561, 2 →    1/38 (12/456 reduced)
+	 *  123/4567, 3 →  123/4567
+	 *  123/4567, 4 →  123/4567
 	 * </pre>
 	 */
 	public Rat reducePrecision(int maxDigits)

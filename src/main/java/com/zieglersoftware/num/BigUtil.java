@@ -449,14 +449,14 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  1000000000000000000000000000        -> true
-	 *  1000000000000000000000000000.000000 -> true
-	 *  1000000000000000000000000000.000001 -> false
-	 *  0   -> true
-	 *  0.0 -> true
-	 * -1000000000000000000000000000        -> true
-	 * -1000000000000000000000000000.000000 -> true
-	 * -1000000000000000000000000000.000001 -> false
+	 *  1000000000000000000000000000        → true
+	 *  1000000000000000000000000000.000000 → true
+	 *  1000000000000000000000000000.000001 → false
+	 *  0   → true
+	 *  0.0 → true
+	 * -1000000000000000000000000000        → true
+	 * -1000000000000000000000000000.000000 → true
+	 * -1000000000000000000000000000.000001 → false
 	 * </pre>
 	 */
 	public static boolean isInt(BigDecimal val)
@@ -474,24 +474,24 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  1.8 ->  2
-	 *  1.5 ->  2
-	 *  1.2 ->  1
-	 *  1.0 ->  1
-	 *  1   ->  1
-	 *  0.8 ->  1
-	 *  0.5 ->  1
-	 *  0.2 ->  0
-	 *  0.0 ->  0
-	 *  0   ->  0
-	 * -0.2 ->  0
-	 * -0.5 -> -1
-	 * -0.8 -> -1
-	 * -1   -> -1
-	 * -1.0 -> -1
-	 * -1.2 -> -1
-	 * -1.5 -> -2
-	 * -1.8 -> -2
+	 *  1.8 →  2
+	 *  1.5 →  2
+	 *  1.2 →  1
+	 *  1.0 →  1
+	 *  1   →  1
+	 *  0.8 →  1
+	 *  0.5 →  1
+	 *  0.2 →  0
+	 *  0.0 →  0
+	 *  0   →  0
+	 * -0.2 →  0
+	 * -0.5 → -1
+	 * -0.8 → -1
+	 * -1   → -1
+	 * -1.0 → -1
+	 * -1.2 → -1
+	 * -1.5 → -2
+	 * -1.8 → -2
 	 * </pre>
 	 */
 	public static BigInteger round(BigDecimal val)
@@ -521,24 +521,24 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 * 10     , 0 -> 10
-	 * 10     , 1 -> 10
-	 * 10.0   , 0 -> 10
-	 * 10.0   , 1 -> 10
-	 * 10.01  , 0 -> 10
-	 * 10.01  , 1 -> 10
-	 * 10.01  , 2 -> 10.01
-	 *  1.9803, 0 ->  2
-	 *  1.9803, 1 ->  2
-	 *  1.9803, 2 ->  1.98
-	 *  1.9805, 3 ->  1.981
-	 *  1.9803, 5 ->  1.9803
-	 *  0.00  , 4 ->  0
-	 * -1.0   , 1 -> -1
-	 * -1.55  , 0 -> -2
-	 * -1.55  , 1 -> -1.6
-	 * -1.55  , 2 -> -1.55
-	 * -1.55  , 3 -> -1.55
+	 * 10     , 0 → 10
+	 * 10     , 1 → 10
+	 * 10.0   , 0 → 10
+	 * 10.0   , 1 → 10
+	 * 10.01  , 0 → 10
+	 * 10.01  , 1 → 10
+	 * 10.01  , 2 → 10.01
+	 *  1.9803, 0 →  2
+	 *  1.9803, 1 →  2
+	 *  1.9803, 2 →  1.98
+	 *  1.9805, 3 →  1.981
+	 *  1.9803, 5 →  1.9803
+	 *  0.00  , 4 →  0
+	 * -1.0   , 1 → -1
+	 * -1.55  , 0 → -2
+	 * -1.55  , 1 → -1.6
+	 * -1.55  , 2 → -1.55
+	 * -1.55  , 3 → -1.55
 	 * </pre>
 	 */
 	public static BigDecimal round(BigDecimal val, int decimalPlaces)
@@ -568,15 +568,15 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  3.80 ->   3
-	 *  3.0  ->   3
-	 *  3    ->   3
-	 *  0.5  ->   0
-	 *  0    ->   0
-	 * -0.5  ->   0
-	 * -3.80 ->  -3
-	 * -3.0  ->  -3
-	 * -3    ->  -3
+	 *  3.80 →   3
+	 *  3.0  →   3
+	 *  3    →   3
+	 *  0.5  →   0
+	 *  0    →   0
+	 * -0.5  →   0
+	 * -3.80 →  -3
+	 * -3.0  →  -3
+	 * -3    →  -3
 	 * </pre>
 	 */
 	public static BigInteger wholePart(BigDecimal val)
@@ -594,15 +594,15 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  3.80 ->  0.8
-	 *  3.0  ->  0
-	 *  3    ->  0
-	 *  0.5  ->  0.5
-	 *  0    ->  0
-	 * -0.5  -> -0.5
-	 * -3.80 -> -0.8
-	 * -3.0  ->  0
-	 * -3    ->  0
+	 *  3.80 →  0.8
+	 *  3.0  →  0
+	 *  3    →  0
+	 *  0.5  →  0.5
+	 *  0    →  0
+	 * -0.5  → -0.5
+	 * -3.80 → -0.8
+	 * -3.0  →  0
+	 * -3    →  0
 	 * </pre>
 	 */
 	public static BigDecimal decimalPart(BigDecimal val)
@@ -620,15 +620,15 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  3.80 -> [ 3,  8]
-	 *  3.0  -> [ 3,  0]
-	 *  3    -> [ 3,  0]
-	 *  0.5  -> [ 0,  5]
-	 *  0    -> [ 0,  0]
-	 * -3.80 -> [-3, -8]
-	 * -3.0  -> [-3,  0]
-	 * -3    -> [-3,  0]
-	 * -0.5  -> [ 0, -5]
+	 *  3.80 → [ 3,  8]
+	 *  3.0  → [ 3,  0]
+	 *  3    → [ 3,  0]
+	 *  0.5  → [ 0,  5]
+	 *  0    → [ 0,  0]
+	 * -3.80 → [-3, -8]
+	 * -3.0  → [-3,  0]
+	 * -3    → [-3,  0]
+	 * -0.5  → [ 0, -5]
 	 * </pre>
 	 */
 	public static BigInteger[] wholeAndDecimalParts(BigDecimal val)
@@ -658,15 +658,15 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  3.80 -> [ 3,  8, 10]
-	 *  3.0  -> [ 3,  0,  1]
-	 *  3    -> [ 3,  0,  1]
-	 *  0.5  -> [ 0,  5, 10]
-	 *  0    -> [ 0,  0,  1]
-	 * -3.80 -> [-3, -8, 10]
-	 * -3.0  -> [-3,  0,  1]
-	 * -3    -> [-3,  0,  1]
-	 * -0.5  -> [ 0, -5, 10]
+	 *  3.80 → [ 3,  8, 10]
+	 *  3.0  → [ 3,  0,  1]
+	 *  3    → [ 3,  0,  1]
+	 *  0.5  → [ 0,  5, 10]
+	 *  0    → [ 0,  0,  1]
+	 * -3.80 → [-3, -8, 10]
+	 * -3.0  → [-3,  0,  1]
+	 * -3    → [-3,  0,  1]
+	 * -0.5  → [ 0, -5, 10]
 	 * </pre>
 	 */
 	public static BigInteger[] mixedNumber(BigDecimal val)
@@ -700,15 +700,15 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  3.80 -> [ 38, 10]
-	 *  3.0  -> [  3,  1]
-	 *  3    -> [  3,  1]
-	 *  0.5  -> [  5, 10]
-	 *  0    -> [  0,  1]
-	 * -3.80 -> [-38, 10]
-	 * -3.0  -> [- 3,  1]
-	 * -3    -> [- 3,  1]
-	 * -0.5  -> [- 5, 10]
+	 *  3.80 → [ 38, 10]
+	 *  3.0  → [  3,  1]
+	 *  3    → [  3,  1]
+	 *  0.5  → [  5, 10]
+	 *  0    → [  0,  1]
+	 * -3.80 → [-38, 10]
+	 * -3.0  → [- 3,  1]
+	 * -3    → [- 3,  1]
+	 * -0.5  → [- 5, 10]
 	 * </pre>
 	 */
 	public static BigInteger[] fraction(BigDecimal val)
@@ -749,13 +749,13 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  123.45600 -> [ [1,2,3], [4,5,6] ]
-	 *    3.0     -> [ [3],     []      ]
-	 *    3       -> [ [3],     []      ]
-	 *    0.5     -> [ [0],     [5]     ]
-	 *    0       -> [ [0],     []      ]
-	 * -  3.0     -> [ [3],     []      ]
-	 * -123.45600 -> [ [1,2,3], [4,5,6] ]
+	 *  123.45600 → [ [1,2,3], [4,5,6] ]
+	 *    3.0     → [ [3],     []      ]
+	 *    3       → [ [3],     []      ]
+	 *    0.5     → [ [0],     [5]     ]
+	 *    0       → [ [0],     []      ]
+	 * -  3.0     → [ [3],     []      ]
+	 * -123.45600 → [ [1,2,3], [4,5,6] ]
 	 * </pre>
 	 */
 	public static int[][] digits(BigDecimal val)
@@ -777,11 +777,11 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  123 -> [1,2,3]
-	 *    3 -> [3]
-	 *    0 -> [0]
-	 *   -3 -> [3]
-	 * -123 -> [1,2,3]
+	 *  123 → [1,2,3]
+	 *    3 → [3]
+	 *    0 → [0]
+	 *   -3 → [3]
+	 * -123 → [1,2,3]
 	 * </pre>
 	 */
 	public static int[] digits(BigInteger val)
@@ -803,11 +803,11 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  123 -> 3
-	 *    3 -> 1
-	 *    0 -> 1
-	 *   -3 -> 1
-	 * -123 -> 3
+	 *  123 → 3
+	 *    3 → 1
+	 *    0 → 1
+	 *   -3 → 1
+	 * -123 → 3
 	 * </pre>
 	 */
 	public static int digitCount(BigInteger val)
@@ -1116,16 +1116,16 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  {@code nthRoot(-1, 3)}          -> -1
-	 *      {@code pow(-1, 0.33333...)} -> {@code ArithmeticException}
-	 *  {@code nthRoot(-8, 3)}          -> -2
-	 *      {@code pow(-8, 0.33333...)} -> {@code ArithmeticException}
-	 *  {@code nthRoot(pow(-8, 5)), 3)} -> -32
-	 *      {@code pow(-8, 1.6666...)}  -> {@code ArithmeticException}
-	 *  {@code nthRoot( 1, 3)}          -> 1
-	 *      {@code pow( 1, 0.33333...)} -> 1
-	 *  {@code nthRoot( 8, 3)}          -> 2
-	 *      {@code pow( 8, 0.33333...)} -> 2
+	 *  {@code nthRoot(-1, 3)}          → -1
+	 *      {@code pow(-1, 0.33333...)} → {@code ArithmeticException}
+	 *  {@code nthRoot(-8, 3)}          → -2
+	 *      {@code pow(-8, 0.33333...)} → {@code ArithmeticException}
+	 *  {@code nthRoot(pow(-8, 5)), 3)} → -32
+	 *      {@code pow(-8, 1.6666...)}  → {@code ArithmeticException}
+	 *  {@code nthRoot( 1, 3)}          → 1
+	 *      {@code pow( 1, 0.33333...)} → 1
+	 *  {@code nthRoot( 8, 3)}          → 2
+	 *      {@code pow( 8, 0.33333...)} → 2
 	 * </pre>
 	 */
 	public static BigDecimal nthRoot(BigDecimal base, long n)
@@ -1152,16 +1152,16 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  {@code nthRoot(-1, 3)}          -> -1
-	 *      {@code pow(-1, 0.33333...)} -> {@code ArithmeticException}
-	 *  {@code nthRoot(-8, 3)}          -> -2
-	 *      {@code pow(-8, 0.33333...)} -> {@code ArithmeticException}
-	 *  {@code nthRoot(pow(-8, 5)), 3)} -> -32
-	 *      {@code pow(-8, 1.6666...)}  -> {@code ArithmeticException}
-	 *  {@code nthRoot( 1, 3)}          -> 1
-	 *      {@code pow( 1, 0.33333...)} -> 1
-	 *  {@code nthRoot( 8, 3)}          -> 2
-	 *      {@code pow( 8, 0.33333...)} -> 2
+	 *  {@code nthRoot(-1, 3)}          → -1
+	 *      {@code pow(-1, 0.33333...)} → {@code ArithmeticException}
+	 *  {@code nthRoot(-8, 3)}          → -2
+	 *      {@code pow(-8, 0.33333...)} → {@code ArithmeticException}
+	 *  {@code nthRoot(pow(-8, 5)), 3)} → -32
+	 *      {@code pow(-8, 1.6666...)}  → {@code ArithmeticException}
+	 *  {@code nthRoot( 1, 3)}          → 1
+	 *      {@code pow( 1, 0.33333...)} → 1
+	 *  {@code nthRoot( 8, 3)}          → 2
+	 *      {@code pow( 8, 0.33333...)} → 2
 	 * </pre>
 	 */
 	public static BigDecimal nthRoot(BigDecimal base, BigInteger n)
@@ -1203,16 +1203,16 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  {@code nthRoot(-1, 3)}          -> -1
-	 *      {@code pow(-1, 0.33333...)} -> {@code ArithmeticException}
-	 *  {@code nthRoot(-8, 3)}          -> -2
-	 *      {@code pow(-8, 0.33333...)} -> {@code ArithmeticException}
-	 *  {@code nthRoot(pow(-8, 5)), 3)} -> -32
-	 *      {@code pow(-8, 1.6666...)}  -> {@code ArithmeticException}
-	 *  {@code nthRoot( 1, 3)}          -> 1
-	 *      {@code pow( 1, 0.33333...)} -> 1
-	 *  {@code nthRoot( 8, 3)}          -> 2
-	 *      {@code pow( 8, 0.33333...)} -> 2
+	 *  {@code nthRoot(-1, 3)}          → -1
+	 *      {@code pow(-1, 0.33333...)} → {@code ArithmeticException}
+	 *  {@code nthRoot(-8, 3)}          → -2
+	 *      {@code pow(-8, 0.33333...)} → {@code ArithmeticException}
+	 *  {@code nthRoot(pow(-8, 5)), 3)} → -32
+	 *      {@code pow(-8, 1.6666...)}  → {@code ArithmeticException}
+	 *  {@code nthRoot( 1, 3)}          → 1
+	 *      {@code pow( 1, 0.33333...)} → 1
+	 *  {@code nthRoot( 8, 3)}          → 2
+	 *      {@code pow( 8, 0.33333...)} → 2
 	 * </pre>
 	 */
 	public static BigDecimal nthRoot(BigInteger base, long n)
@@ -1230,16 +1230,16 @@ public final class BigUtil
 	 * Examples:
 	 * 
 	 * <pre>
-	 *  {@code nthRoot(-1, 3)}          -> -1
-	 *      {@code pow(-1, 0.33333...)} -> {@code ArithmeticException}
-	 *  {@code nthRoot(-8, 3)}          -> -2
-	 *      {@code pow(-8, 0.33333...)} -> {@code ArithmeticException}
-	 *  {@code nthRoot(pow(-8, 5)), 3)} -> -32
-	 *      {@code pow(-8, 1.6666...)}  -> {@code ArithmeticException}
-	 *  {@code nthRoot( 1, 3)}          -> 1
-	 *      {@code pow( 1, 0.33333...)} -> 1
-	 *  {@code nthRoot( 8, 3)}          -> 2
-	 *      {@code pow( 8, 0.33333...)} -> 2
+	 *  {@code nthRoot(-1, 3)}          → -1
+	 *      {@code pow(-1, 0.33333...)} → {@code ArithmeticException}
+	 *  {@code nthRoot(-8, 3)}          → -2
+	 *      {@code pow(-8, 0.33333...)} → {@code ArithmeticException}
+	 *  {@code nthRoot(pow(-8, 5)), 3)} → -32
+	 *      {@code pow(-8, 1.6666...)}  → {@code ArithmeticException}
+	 *  {@code nthRoot( 1, 3)}          → 1
+	 *      {@code pow( 1, 0.33333...)} → 1
+	 *  {@code nthRoot( 8, 3)}          → 2
+	 *      {@code pow( 8, 0.33333...)} → 2
 	 * </pre>
 	 */
 	public static BigDecimal nthRoot(BigInteger base, BigInteger n)
