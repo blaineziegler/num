@@ -11,7 +11,7 @@
 <script type="text/javascript" src="../../../script.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":10,"i39":10,"i40":10,"i41":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -475,19 +475,26 @@ long&nbsp;denominator)</code></th>
 </tr>
 <tr class="rowColor" id="i39">
 <td class="colFirst"><code><a href="Rat.html" title="class in com.zieglersoftware.num">Rat</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#round()">round</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns this Rat rounded to the nearest integer value.</div>
+</td>
+</tr>
+<tr class="altColor" id="i40">
+<td class="colFirst"><code><a href="Rat.html" title="class in com.zieglersoftware.num">Rat</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqrt()">sqrt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the square root of <code>this</code>.</div>
 </td>
 </tr>
-<tr class="altColor" id="i40">
+<tr class="rowColor" id="i41">
 <td class="colFirst"><code><a href="Rat.html" title="class in com.zieglersoftware.num">Rat</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#times(com.zieglersoftware.num.Rat)">times</a></span>&#8203;(<a href="Rat.html" title="class in com.zieglersoftware.num">Rat</a>&nbsp;other)</code></th>
 <td class="colLast">
 <div class="block">Returns <code>this*other</code>.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i41">
+<tr class="altColor" id="i42">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang" class="externalLink">String</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
@@ -829,6 +836,27 @@ long&nbsp;denominator)</span></div>
 <h3><a id="denominator()">denominator</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html?is-external=true" title="class or interface in java.math" class="externalLink">BigInteger</a></span>&nbsp;<span class="memberName">denominator</span>()</div>
 <div class="block">Returns the denominator of <code>this</code>, in its reduced-form representation.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="round()">round</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Rat.html" title="class in com.zieglersoftware.num">Rat</a></span>&nbsp;<span class="memberName">round</span>()</div>
+<div class="block">Returns this Rat rounded to the nearest integer value. Uses <a href="https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html?is-external=true#HALF_UP" title="class or interface in java.math" class="externalLink"><code>RoundingMode.HALF_UP</code></a>.
+ <p>
+ Examples:
+ 
+ <pre>
+  1   →  1
+  4/5 →  1
+  1/2 →  1
+  1/5 →  0
+  0   →  0
+ -1/5 →  0
+ -1/2 → -1
+ -4/5 → -1
+ -1   → -1
+ </pre></div>
 </section>
 </li>
 <li class="blockList">

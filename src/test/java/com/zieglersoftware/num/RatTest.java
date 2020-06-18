@@ -865,6 +865,27 @@ public class RatTest
 	}
 
 	@Test
+	public void round()
+	{
+		round(1, 1, 1);
+		round(4, 5, 1);
+		round(1, 2, 1);
+		round(1, 5, 0);
+		round(0, 1, 0);
+		round(-1, 5, 0);
+		round(-1, 2, -1);
+		round(-4, 5, -1);
+		round(-1, 1, -1);
+	}
+
+	private void round(int numerator, int denominator, int expectedInteger)
+	{
+		Rat result = rat(numerator, denominator).round();
+		assertEquals(expectedInteger, result.numerator().intValue());
+		assertEquals(1, result.denominator().intValue());
+	}
+
+	@Test
 	public void reducePrecision()
 	{
 		reducePrecision(0, 1, 1, 0, 1);

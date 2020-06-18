@@ -10,7 +10,6 @@ import static com.zieglersoftware.num.BigUtil.bi;
 import static com.zieglersoftware.num.BigUtil.digitCount;
 import static com.zieglersoftware.num.BigUtil.divide;
 import static com.zieglersoftware.num.BigUtil.fraction;
-import static com.zieglersoftware.num.BigUtil.round;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -487,6 +486,28 @@ public final class Rat extends Number implements Comparable<Rat>
 	}
 
 	/**
+	 * Returns this Rat rounded to the nearest integer value. Uses {@link RoundingMode#HALF_UP}.
+	 * <p>
+	 * Examples:
+	 * 
+	 * <pre>
+	 *  1   →  1
+	 *  4/5 →  1
+	 *  1/2 →  1
+	 *  1/5 →  0
+	 *  0   →  0
+	 * -1/5 →  0
+	 * -1/2 → -1
+	 * -4/5 → -1
+	 * -1   → -1
+	 * </pre>
+	 */
+	public Rat round()
+	{
+		return rat(BigUtil.round(bigDecimalValue()));
+	}
+
+	/**
 	 * If both the numerator and denominator of this Rat have more digits than the given maximum,
 	 * returns a different Rat where both the numerator and denominator have been divided by a power of 10
 	 * such that the <i>shorter</i> of the two has the requested number of digits. If rounding is necessary, {@link RoundingMode#HALF_UP}
@@ -514,8 +535,8 @@ public final class Rat extends Number implements Comparable<Rat>
 		if (leastDigits <= maxDigits)
 			return this;
 		BigInteger divisor = bi(10).pow(leastDigits - maxDigits);
-		BigInteger newNumerator = round(divide(numerator, divisor));
-		BigInteger newDenominator = round(divide(denominator, divisor));
+		BigInteger newNumerator = BigUtil.round(divide(numerator, divisor));
+		BigInteger newDenominator = BigUtil.round(divide(denominator, divisor));
 		return rat(newNumerator, newDenominator);
 	}
 
