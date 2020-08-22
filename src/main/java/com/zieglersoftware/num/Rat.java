@@ -1,7 +1,7 @@
 package com.zieglersoftware.num;
 
-import static com.zieglersoftware.assertions.Assertions.fals;
-import static com.zieglersoftware.assertions.Assertions.notNull;
+import static com.zieglersoftware.num.Assertions.fals;
+import static com.zieglersoftware.num.Assertions.notNull;
 import static com.zieglersoftware.num.BigUtil.BI0;
 import static com.zieglersoftware.num.BigUtil.BI1;
 import static com.zieglersoftware.num.BigUtil.BIM1;
@@ -14,8 +14,6 @@ import static com.zieglersoftware.num.BigUtil.fraction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-
-import com.zieglersoftware.assertions.Assertions;
 
 /**
  * Immutable class that represents a rational number; i.e., a number that can be

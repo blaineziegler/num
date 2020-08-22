@@ -1,6 +1,6 @@
 package com.zieglersoftware.num;
 
-import static com.zieglersoftware.assertions.Assertions.tru;
+import static com.zieglersoftware.num.Assertions.tru;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

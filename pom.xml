@@ -74,16 +74,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<assertions-version>2.0.0</assertions-version>
 		<junit-version>4.12</junit-version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.zieglersoftware</groupId>
-			<artifactId>assertions</artifactId>
-			<version>${assertions-version}</version>
-		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

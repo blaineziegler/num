@@ -1,6 +1,6 @@
 package com.zieglersoftware.num;
 
-import static com.zieglersoftware.assertions.Assertions.greater;
+import static com.zieglersoftware.num.Assertions.greater;
 
 import java.util.ArrayList;
 import java.util.HashMap;

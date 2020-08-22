@@ -1,9 +1,9 @@
 package com.zieglersoftware.num;
 
-import static com.zieglersoftware.assertions.Assertions.fals;
-import static com.zieglersoftware.assertions.Assertions.greater;
-import static com.zieglersoftware.assertions.Assertions.notEqual;
-import static com.zieglersoftware.assertions.Assertions.tru;
+import static com.zieglersoftware.num.Assertions.fals;
+import static com.zieglersoftware.num.Assertions.greater;
+import static com.zieglersoftware.num.Assertions.notEqual;
+import static com.zieglersoftware.num.Assertions.tru;
 import static com.zieglersoftware.num.BigUtil.BI1;
 import static com.zieglersoftware.num.BigUtil.bi;
 import static com.zieglersoftware.num.BigUtil.equal;

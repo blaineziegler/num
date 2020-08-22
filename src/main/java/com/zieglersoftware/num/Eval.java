@@ -1,9 +1,9 @@
 package com.zieglersoftware.num;
 
-import static com.zieglersoftware.assertions.Assertions.fals;
-import static com.zieglersoftware.assertions.Assertions.notEmpty;
-import static com.zieglersoftware.assertions.Assertions.notNull;
-import static com.zieglersoftware.assertions.Assertions.tru;
+import static com.zieglersoftware.num.Assertions.fals;
+import static com.zieglersoftware.num.Assertions.notEmpty;
+import static com.zieglersoftware.num.Assertions.notNull;
+import static com.zieglersoftware.num.Assertions.tru;
 import static com.zieglersoftware.num.Rat.rat;
 
 import java.math.BigInteger;
